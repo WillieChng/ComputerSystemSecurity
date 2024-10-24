@@ -1,0 +1,76 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Header */
+.header {
+    background-color: #a6ce9d;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.company-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: black;
+}
+
+/* Dropdown Menu */
+.dropdown {
+    width: 50%;
+    margin: 20px auto;
+    background-color: #e58b50;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-header {
+    padding: 15px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-arrow {
+    font-size: 16px;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: #d1d1d1;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 0;
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.dropdown-content a:hover {
+    background-color: #bbb;
+}
+
+/* Page Layout */
+@media screen and (min-width: 1200px) {
+    .dropdown {
+        width: 30%;
+    }
+}
