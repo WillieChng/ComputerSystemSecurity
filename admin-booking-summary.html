@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Summary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1>Company Name</h1>
+        <div class="menu-icon">☰</div>
+    </div>
+
+    <div class="container">
+        <div class="dropdown" onclick="toggleDropdown()">
+            <span>Booking Summary</span>
+            <span>▼</span>
+        </div>
+
+        <div class="dropdown-content" id="dropdown-content">
+            <a href="booking-summary.html">Booking Summary</a>
+            <a href="customer-statistics.html">Customer Statistics</a>
+        </div>
+
+        <div class="content-box">
+            <h2>Overview</h2>
+
+            <div class="stats">
+                <div>
+                    <h3>Day</h3>
+                    <p>Total Bookings: 8</p>
+                </div>
+                <div>
+                    <h3>Week</h3>
+                    <p>Total Bookings: 40</p>
+                </div>
+                <div>
+                    <h3>Month</h3>
+                    <p>Total Bookings: 200</p>
+                </div>
+                <div>
+                    <h3>Available Spaces</h3>
+                    <p>Spaces: 10</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

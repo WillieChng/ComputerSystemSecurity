@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Overview</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   
+    <header class="header">
+        <div class="company-name">Company Name</div>
+        <div class="menu-icon">☰</div>
+    </header>
+
+
+    <div class="dropdown">
+        <div class="dropdown-header" onclick="toggleDropdown()">
+            Overview <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-content" id="dropdownContent">
+            <a href="booking-summary.html">Booking Summary</a>
+            <a href="customer-statistics.html">Customer Statistics</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
