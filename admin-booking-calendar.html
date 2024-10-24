@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1>Company Name</h1>
+        <div class="menu-icon">☰</div>
+    </div>
+
+    <div class="container">
+        <div class="dropdown" onclick="toggleDropdown()">
+            <span>Booking Calendar</span>
+            <span>▼</span>
+        </div>
+
+        <div class="dropdown-content" id="dropdown-content">
+            <a href="#upcoming-bookings">Upcoming Bookings</a>
+            <a href="#booking-calendar">Booking Calendar</a>
+            <a href="#add-new-booking">Add New Booking</a>
+        </div>
+
+        <h2>Booking Calendar - October</h2>
+
+        <div class="calendar">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fully-booked"></td>
+                        <td></td>
+                        <td class="fully-booked"></td>
+                        <td class="fully-booked"></td>
+                        <td class="fully-booked"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="fully-booked"></td>
+                        <td></td>
+                        <td class="fully-booked"></td>
+                        <td class="fully-booked"></td>
+                    </tr>
+                    <tr>
+                        <td class="fully-booked"></td>
+                        <td></td>
+                        <td class="fully-booked"></td>
+                        <td></td>
+                        <td class="fully-booked"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="fully-booked"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="color-box fully-booked"></div>
+                <span>- Fully Booked</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box available"></div>
+                <span>- Available Slots</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
