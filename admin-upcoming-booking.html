@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Bookings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1>Company Name</h1>
+        <div class="menu-icon">☰</div>
+    </div>
+
+    <div class="container">
+        <div class="dropdown" onclick="toggleDropdown()">
+            <span>Upcoming Booking</span>
+            <span>▼</span>
+        </div>
+
+        <div class="dropdown-content" id="dropdown-content">
+            <a href="#upcoming-bookings">Upcoming Bookings</a>
+            <a href="#booking-calendar">Booking Calendar</a>
+            <a href="#add-new-booking">Add New Booking</a>
+        </div>
+
+        <h2>Booking Table</h2>
+        <div class="booking-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Booking Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R001</td>
+                        <td>11th October 2024</td>
+                        <td>10:00 A.M.</td>
+                        <td>Day Pass</td>
+                    </tr>
+                    <tr>
+                        <td>R002</td>
+                        <td>14th October 2024</td>
+                        <td>1:00 P.M.</td>
+                        <td>Prepaid Pass</td>
+                    </tr>
+                    <tr>
+                        <td>R003</td>
+                        <td>15th October 2024</td>
+                        <td>4:30 P.M.</td>
+                        <td>Monthly Pass</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
