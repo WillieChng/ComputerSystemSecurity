@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+header {
+    background-color: #b8d4b8;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+header h1 {
+    color: black;
+    font-size: 28px;
+    margin-left: 10px;
+}
+
+/* Overview heading */
+.overview {
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Dropdown button */
+.dropdown {
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.dropdown-btn {
+    background-color: #f08c41;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-btn::after {
+    content: '▼';
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #eee;
+    width: 100%;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 10px 12px;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Desktop optimization */
+@media (min-width: 1024px) {
+    .container {
+        width: 80%;
+        padding: 50px;
+    }
+
+    .dropdown-btn {
+        padding: 25px;
+        font-size: 22px;
+    }
+}
+
+.statistics {
+    margin-top: 30px;
+}
+
+.stats-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.stats-item {
+    background-color: #e7e7e7;
+    padding: 20px;
+    width: 30%;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.stats-item h3 {
+    color: #333;
+}
+
+.stats-item p {
+    font-size: 18px;
+    color: #555;
+}
+
+canvas {
+    display: block;
+    margin: 30px auto;
+    max-width: 80%;
+}

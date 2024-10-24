@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Statistics</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Company Name</h1>
+        </header>
+        <section class="overview">
+            <h2>Overview</h2>
+            <div class="dropdown">
+                <button class="dropdown-btn" id="dropdown-btn">Customer Statistics</button>
+                <div class="dropdown-content" id="dropdown-content">
+                    <a href="#">Booking Summary</a>
+                    <a href="#">Customer Statistics</a>
+                </div>
+            </div>
+
+            <div class="statistics">
+                
+                <div class="stats-content">
+                    <div class="stats-item">
+                        <p>New Customers: <span id="new-customers">50</span></p>
+                    </div>
+                    <div class="stats-item">
+                        <p>Returning Customers: <span id="returning-customers">80</span></p>
+                    </div>
+                </div>
+                <canvas id="customerChart" width="400" height="400"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
