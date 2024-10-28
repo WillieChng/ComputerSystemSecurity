@@ -10,14 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^6.1.6",
-    "@mui/material": "^6.1.6",
+    "admin": "file:",
     "react": "^18.3.1",
-    "react-calendar": "^5.1.0",
+    "react-calendar": "^5.0.0",
     "react-dom": "^18.3.1",
-    "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
@@ -30,6 +26,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",
     "globals": "^15.9.0",
+    "typescript": "^5.6.3",
     "vite": "^5.4.8"
   }
 }
