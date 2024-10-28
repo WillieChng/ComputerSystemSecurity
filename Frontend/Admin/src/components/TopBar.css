@@ -1,0 +1,135 @@
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Titillium Web", sans-serif;
+}
+
+:root {
+	--topBarMainColor: #b0dbb2;
+	--topBarTextColor: black;
+}
+
+
+header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 80px;
+	padding: 0 2rem;
+	background-color: var(--topBarMainColor);
+	color: var(--topBarTextColor);
+	transition: margin-right 0.3s ease; /* Smooth transition */
+	margin-right: 250px; /* Adjust for sidebar width */
+}
+
+header.collapsed {
+	margin-right: 60px; /* Adjust for collapsed sidebar width */
+}
+
+header .nav-btn {
+	padding: 3px;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--topBarTextColor);
+	visibility: hidden;
+	opacity: 0;
+	font-size: 1.8rem;
+}
+
+.main-logo-link { /* Style the Link */
+	text-decoration: none; /* Remove underline */
+	color: inherit; /* Inherit color from parent (or set a specific color) */
+	display: flex;
+	justify-content: center;
+}
+
+.main-logo{
+	color: black; 
+	display: flex; 
+	justify-content: center;
+}
+
+.topbar-right{
+	display: flex; 
+	align-items: center;
+}
+
+h1{
+    font-size: 40px ;
+}
+
+
+.account-dropdown {
+	position: relative; /* To position the dropdown content */
+	display: inline-block; /* To keep the dropdown within the flow of the content */
+}
+  
+.dropdown-content {
+    display: none; 
+    position: absolute; 
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);  
+    z-index: 1; 
+	right: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block; 
+}
+
+.dropdown-content  
+ button {
+    background-color: transparent;
+    position: relative;
+    border: none ;
+    transition: all 0.2s ease; 
+    width: 100%;
+    text-align: left; /* Align the button text to the left */
+}
+
+.dropdown-content button:hover{
+    background-color: #c0c0c0;  
+    color: #ffffff; 
+}
+
+.dropdown-content button a { /* Target the <a> tag inside the button */
+    display: block;  
+    color: inherit; /* Inherit color from the parent button */
+}
+
+.dropdown-content button a:hover { 
+    background-color: transparent; /* Remove background color change on hover */
+    color: inherit; /* Inherit color from the parent button */
+}
+.account-selection-button {
+	background-color: transparent;
+	border: none;
+	padding: 1px;
+	border-radius: 45px;
+	transition: background-color 0.3s ease;
+	display: flex; 
+}
+
+.account-selection-button:hover {
+	background-color: #78c79d;
+	cursor: pointer;
+}
+
+.account-content {
+	display: flex;
+	flex-direction: column; /* Stack image and text vertically */
+	align-items: center;
+}
+
+.account-selection-button:hover  
+	+ .dropdown-content, .dropdown-content:hover {
+		display: block; /* Show the dropdown on button hover */
+	}
