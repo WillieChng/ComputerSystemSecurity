@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -10,19 +10,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Create the SQLAlchemy db instance
 db = SQLAlchemy(app)
 
-# Define a User model
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), unique=True, nullable=False)
-    password = db.Column(db.String(150), nullable=False)
+# Import the User models
+from models import User
 
 # Create the database tables
 with app.app_context():
     db.create_all()
 
-@app.route('/api/data', methods=['GET'])
-def get_data():
-    return jsonify({"message": "Hello from Flask!"})
+#import the routes
+from routes import api
+app.register_blueprint(api)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
