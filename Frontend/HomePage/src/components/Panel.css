@@ -1,0 +1,69 @@
+
+/*Menu Effect*/
+.main-effect {
+    display: flex;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #62b287;
+    color: white; /* Default font color */
+    text-align: left;
+}
+
+.menu-effect{
+    background-color: #90c2a7;
+}
+
+.selection-effect{
+    background-color: #78c79d;
+    color: white;
+}
+
+
+/*Panel Button */
+.panel-collapsible {
+    margin: 10px;
+    direction: rtl;
+    text-align: right;
+}
+  
+.panel-collapsible-button {
+    margin-right: 10px;
+    background: none;
+    border: 0;
+    color: white;
+    font-size: 20px;
+    cursor: pointer; 
+    padding-bottom: 16px;
+}
+
+
+/* Account Side Panel Section */
+.account-menu{
+    background-color: #90c2a7;
+    position: absolute;
+    position: relative;
+}
+
+.account-menu-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    padding: 10px;
+}
+  
+.account-menu-tab-image {
+    width: 65px;
+    height: 65px;
+}
+
+.account-menu-tab-name {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+
+
+  
