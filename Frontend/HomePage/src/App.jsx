@@ -4,9 +4,13 @@ import './App.css';
 import './Login.css';
 import './CreateAccount.css';
 import './ForgotPassword.css';
-import Login from './Login';
-import CreateAccount from './CreateAccount';
-import ForgotPassword from './ForgotPassword';
+import './Panel.css';
+import './TopBar.css';
+import Login from '../pages/Login';
+import CreateAccount from '../pages/CreateAccount';
+import ForgotPassword from '../pages/ForgotPassword';
+import Panel from '../components/Panel';
+import Panel from '../components/TopBar';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
