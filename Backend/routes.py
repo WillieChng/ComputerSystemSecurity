@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, render_template, request
-from .models import User
+from Backend.models import User
 
 # Create new blueprints
 api = Blueprint('api', __name__)
