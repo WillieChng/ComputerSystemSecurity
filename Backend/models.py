@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
-    pword = db.Column(db.String(150), nullable=False)
+    pword = db.Column(db.String(255), nullable=False)
 
     #prevent plaintext password from being read
     @property
@@ -18,6 +18,9 @@ class User(db.Model):
 
     def verify_password(self, password):  
         return check_password_hash(self.pword, password)
+    
+    def __repr__(self):
+        return (f"User\nUser ID: {self.id}\nUsername: {self.username}")
 
 # Existing table for customers
 class Customer(db.Model):
@@ -36,6 +39,18 @@ class Customer(db.Model):
                 f"\nLast Name: {self.last_name}\nGender: {self.gender}, Phone Number: {self.phone_number}"
                 f"\nE-mail: {self.email}\nOrganization: {self.org}")
 
+class Transaction(db.Model):
+    __tablename__ = 'transactions'
+
+    trans_no = db.Column('Trans_No', db.String(100), nullable=False)
+    pay_method = db.Column('Payment_Method', db.String(50), nullable=False)
+    pay_date = db.Column('Payment_Date', db.Date, nullable=False)
+    invoice_no = db.Column('Invoice_No', db.Integer, nullable=False, primary_key=True)
+    customer_id = db.Column('Customer_ID', db.Integer, nullable=False)
+
+    def __repr__(self):
+        return (f"Transaction\nTransaction No: {self.trans_no}\nPayment Method: {self.pay_method}"
+                f"\nPayment Date: {self.pay_date}\nInvoice No: {self.invoice_no}\nCustomer ID: {self.customer_id}")
 
 
 
