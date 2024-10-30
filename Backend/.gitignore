@@ -1,2 +1,12 @@
+#Ignore __pycache__ dir
+__pycache__/
+
 #ignore .env files
 *.env
+
+# Ignore other common files and directories
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
