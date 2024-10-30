@@ -1,20 +1,25 @@
-from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
-from dotenv import load_dotenv
-import os
+from Backend.models import User, Customer
+from Backend.db_init_test import db, app
+from tabulate import tabulate
 
-# Load the .env file
-load_dotenv()
+#Create the database tables if they do not exist
+with app.app_context():
+    db.create_all()
 
-app = Flask(__name__)
+#Query the database
+def query():
+    user = User.query.all()
+    customer = Customer.query.all()
+    return user, customer
 
-# Configure the SQLAlchemy part of the app instance
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.getenv('DB_USERNAME')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_DATABASE')}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Create the SQLAlchemy db instance
-db = SQLAlchemy(app)
+#Display the query results from the query()
+def print_query():
+    user, customer = query()
+    print("Users:")
+    print(tabulate(user, headers='keys', tablefmt='pretty'))
+    print("Customers:")
+    print(tabulate(customer, headers='keys', tablefmt='pretty'))
 
 def test_db_connection():
     with app.app_context():
@@ -22,19 +27,22 @@ def test_db_connection():
             # Attempt to query the database
             db.session.execute(text('SELECT 1'))
             print("Database connection successful")
-            result = db.session.execute(text('SHOW DATABASES'))
-            for row in result:
-                print(row[0])
-            db.session.execute(text('USE CSS'))
-            result = db.session.execute(text('SHOW TABLES'))
-            for row in result:
-                print(row[0])
-            #show columns from table
-            result = db.session.execute(text('DESCRIBE customer'))
-            for row in result:
-                print(row[0])
+            print_query()
         except Exception as e:
             print(f"Database connection failed: {str(e)}")
 
 if __name__ == '__main__':
     test_db_connection()
+
+
+# result = db.session.execute(text('SHOW DATABASES'))
+            # for row in result:
+            #     print(row[0])
+            # db.session.execute(text('USE CSS'))
+            # result = db.session.execute(text('SHOW TABLES'))
+            # for row in result:
+            #     print(row[0])
+            # #show columns from table
+            # result = db.session.execute(text('DESCRIBE customer'))
+            # for row in result:
+            #     print(row[0])

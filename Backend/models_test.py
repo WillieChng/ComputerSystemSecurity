@@ -1,4 +1,4 @@
-from .db_init_test import db
+from Backend.test_db_connection import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # New table for users
@@ -24,12 +24,12 @@ class Customer(db.Model):
     __tablename__ = 'customer'
 
     customer_id = db.Column('Customer_ID', db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    first_name = db.Column('First_Name', db.String(50), nullable=False)
-    last_name = db.Column('Last_Name', db.String(50), nullable=False)
-    gender = db.Column('Gender', db.CHAR(1), nullable=False)
+    first_name = db.Column('First_Name', db.varchar(50), nullable=False)
+    last_name = db.Column('Last_Name', db.varchar(50), nullable=False)
+    gender = db.Column('Gender', db.char(1), nullable=False)
     phone_number = db.Column('Phone_Number', db.Integer, nullable=False)
-    email = db.Column('E-mail', db.String(50), nullable=False)
-    org = db.Column('Organisation', db.String(100), nullable=False)
+    email = db.Column('E-mail', db.varchar(50), nullable=False)
+    org = db.Column('Organization', db.varchar(100), nullable=False)
 
     def __repr__(self):
         return (f"Customer\nCustomer_ID: {self.customer_id}\nFirst Name: {self.first_name}"
