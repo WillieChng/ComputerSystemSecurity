@@ -1,4 +1,4 @@
-from sqlalchemy import text
+from sqlalchemy import text, select
 from Backend.models import User, Customer
 from Backend.db_init import db, app
 from tabulate import tabulate
@@ -7,19 +7,37 @@ from tabulate import tabulate
 with app.app_context():
     db.create_all()
 
+user_list = []
+customer_list = []
+
 #Query the database
 def query():
-    user = User.query.all()
-    customer = Customer.query.all()
-    return user, customer
+    for instance in db.session.query(User).order_by(User.id):
+        user_dict = {
+        "User_ID": instance.id,
+        "Username": instance.username
+        }
+        user_list.append(user_dict)
+    
+    for instance in db.session.query(Customer).order_by(Customer.customer_id):
+        customer_dict = {
+        "Customer_ID": instance.customer_id,
+        "First_Name": instance.first_name,
+        "Last_Name": instance.last_name,
+        "Gender": instance.gender,
+        "Phone_Number": instance.phone_number,
+        "E-mail": instance.email,
+        "Organisation": instance.org
+        }
+        customer_list.append(customer_dict)
 
 #Display the query results from the query()
 def print_query():
-    user, customer = query()
+    query()
     print("Users:")
-    print(tabulate(user, headers='keys', tablefmt='pretty'))
+    print(tabulate(user_list, headers='keys', tablefmt='pretty'))
     print("Customers:")
-    print(tabulate(customer, headers='keys', tablefmt='pretty'))
+    print(tabulate(customer_list, headers='keys', tablefmt='pretty'))
 
 #import the routes
 from routes import api
