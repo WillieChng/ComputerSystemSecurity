@@ -1,0 +1,138 @@
+/* App.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  .App {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  /* Top navigation */
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #92c48c;
+    padding: 15px;
+    position: relative;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .menu-icon {
+    cursor: pointer;
+  }
+  
+  .hamburger {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px 0;
+  }
+  
+  .homepage-content {
+    text-align: center;
+  }
+  
+  .hero {
+    margin-top: 40px;
+  }
+  
+  .hero h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .images {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .images img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .cta h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .cta ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .cta ul li {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .book-now {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .book-now:hover {
+    background-color: #45a049;
+  }
+  
+  /* Sidebar */
+  .side-menu {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .close-btn {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    align-self: flex-end;
+    cursor: pointer;
+  }
+  
+  .side-menu ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .side-menu ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+  }
+  
+  .side-menu ul li:hover {
+    background-color: #555;
+  }
+  

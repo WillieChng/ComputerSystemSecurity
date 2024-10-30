@@ -1,0 +1,94 @@
+/* Container for the create account form */
+.create-account-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-account-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-account-header h1 {
+  color: #333;
+  font-size: 24px;
+}
+
+/* Input group for form elements */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.input-group input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* Button styling */
+.create-btn {
+  background-color: #FF7A33;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.create-btn:hover {
+  background-color: #FF5722;
+}
+
+.create-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* Success message styling */
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* Placeholder styling */
+.input-group input::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+.back-btn{
+  display: block;
+  margin-top: 10px;
+  font-size: 15px;
+  text-align: center;
+}
