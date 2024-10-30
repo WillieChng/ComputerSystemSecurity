@@ -1,11 +1,14 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Booking from './Booking';
-import AboutUs from './AboutUs';
-import Home from './Home';
+import Panel from './components/Panel';
+import Booking from './pages/Booking';
+import AboutUs from './pages/AboutUs';
+import Home from './pages/Home';
+
 
 function App(){
     return(
         <Router>
+            <Panel />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/booking" element={<Booking />} />
