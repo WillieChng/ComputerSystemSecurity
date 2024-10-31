@@ -1,4 +1,4 @@
-from .db_init import db
+from .app_db_init import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # New table for users
