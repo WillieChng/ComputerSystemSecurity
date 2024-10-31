@@ -1,6 +1,6 @@
 from sqlalchemy import text, select
 from Backend.models import User, Customer
-from Backend.db_init import db, app
+from Backend.app_db_init import db, app
 from tabulate import tabulate
 
 #Create the database tables if they do not exist

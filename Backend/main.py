@@ -1,6 +1,6 @@
-from sqlalchemy import text, select
+from sqlalchemy import text
 from Backend.models import User, Customer
-from Backend.db_init import db, app
+from Backend.app_db_init import db, app
 from tabulate import tabulate
 
 #Create the database tables if they do not exist
@@ -54,5 +54,5 @@ def db_connection():
             print(f"Database connection failed: {str(e)}")
 
 if __name__ == '__main__':
-    # app.run(debug=True)
+    app.run(host='127.0.0.1', port=5289, debug=True)
     db_connection()
