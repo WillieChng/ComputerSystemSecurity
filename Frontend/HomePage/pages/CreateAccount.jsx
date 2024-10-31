@@ -107,7 +107,7 @@ function CreateAccount() {
         <button type="submit" className="create-btn" disabled={loading}>
           {loading ? 'Creating...' : 'Create'}
         </button>
-        <Link to="/" className="back-btn">
+        <Link to="/Login" className="back-btn">
           Go Back to Login
         </Link>
       </form>

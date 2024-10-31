@@ -9,7 +9,7 @@ import Logo from '../public/collabkita-logo.png';
 import HomeIcon from '@mui/icons-material/Home';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import InfoIcon from '@mui/icons-material/Info';
-
+import LoginIcon from '@mui/icons-material/Login';
 
 export default function Panel() {
   const [collapsed, setCollapsed] = React.useState(false);  
@@ -88,6 +88,9 @@ export default function Panel() {
           <MenuItem 
             icon={<TableRestaurantIcon style={{ fontSize: '30px' }} />} 
             component={<Link to="booking" />}> Booking </MenuItem>
+          <MenuItem 
+            icon={<LoginIcon style={{ fontSize: '30px' }} />} 
+            component={<Link to="Login" />}> Login </MenuItem>
           <MenuItem 
             icon={<InfoIcon style={{ fontSize: '30px' }} />} 
             component={<Link to="aboutus" />}> About Us </MenuItem>

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Import useNavigate and Link
 import './Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,8 +24,8 @@ function Login() {
 
       if (response.ok) {
         alert('Login successful!');
-        // Optionally navigate to another page after login
-        navigate('/dashboard'); // Replace with the route for your dashboard or home page
+        // Navigate to the dashboard or home page after login
+        navigate('/dashboard'); // Replace with your desired route
       } else {
         setError(data.message || 'Invalid email or password');
       }
@@ -60,11 +59,11 @@ function Login() {
             required
           />
         </div>
-      <div className="account-options">
-        <a href="/forgot-password">Forgot password?</a>
-        <a href="/create-account">Create account</a>
-      </div>
-      <div className="actions">
+        <div className="account-options">
+          <Link to="/forgot-password">Forgot password?</Link>
+          <Link to="/create-account">Create account</Link>
+        </div>
+        <div className="actions">
           <button type="submit" className="login-btn">
             Login
           </button>

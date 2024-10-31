@@ -4,8 +4,6 @@ import "./TopBar.css";
 import AccountPng from '../public/8345328.png';
 import Logo from '../public/collabkita-logo.png';
 
-
-
 export default function TopBar({ collapsed }) {
     return (
       <header className={collapsed ? 'collapsed' : ''}> 

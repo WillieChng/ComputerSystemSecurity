@@ -61,7 +61,7 @@ function ForgotPassword() {
           {loading ? 'Sending...' : 'Reset Password'}
         </button>
         <div className="back-to-login">
-        <Link to="/" className="back-btn">Back to Login</Link>
+        <Link to="/Login" className="back-btn">Back to Login</Link>
         </div>
       </form>
       {message && <p className="message">{message}</p>}

@@ -12,11 +12,15 @@
 .login-header {
   text-align: center;
   margin-bottom: 20px;
+  background: none;
+  display: flex;
+  margin-left: 108px;
 }
 
 .login-header h1 {
   color: #333;
-  font-size: 24px;
+  font-size: 30px;
+  margin: 0;
 }
 
 /* Input group for form elements */
