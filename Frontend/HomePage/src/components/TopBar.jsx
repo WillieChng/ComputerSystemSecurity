@@ -1,10 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "./TopBar.css";
-import AccountPng from '../public/8345328.png';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Logo from '../public/collabkita-logo.png';
-
-
 
 export default function TopBar({ collapsed }) {
     return (
@@ -56,13 +54,9 @@ function AccountDropdown() {
 	  	onMouseLeave={handleMouseLeave}
 	  >
         <button className="account-selection-button">
-          <div className="account-content">
-            <img
-              src={AccountPng}
-              alt="Account"
-              style={{ width: '40px', height: '40px', borderRadius: '50%', margin: '10px' }}
-            />
-          </div>
+        <div className="account-content">
+          <AccountCircleIcon className="account-icon" style={{ fontSize: '40px' }} />
+        </div>
         </button>
         {isDropdownOpen && (
           <div className="dropdown-content"> 
