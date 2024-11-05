@@ -1,10 +1,21 @@
-import {Link} from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import LockIcon from '@mui/icons-material/Lock';
 import WifiIcon from '@mui/icons-material/Wifi';
 
-function Home() {
+const Home = ({ isLoggedIn }) => {
+    const navigate = useNavigate();
+
+    const handleBookingClick = () => {
+        if (isLoggedIn) {
+            navigate('/booking'); // If logged in, navigate to booking
+        } else {
+            navigate('/login'); // If not logged in, navigate to login
+        }
+    };
+  
     const styles = {
         title: {
             textAlign: 'center',
@@ -87,9 +98,7 @@ function Home() {
             </ul>
             
             <div style={styles.buttonContainer}>
-                <Link to="/booking">
-                <button style={styles.button}>Book Now</button>
-                </Link>
+                <button style={styles.button} onClick={handleBookingClick}>Book Now</button>
             </div>
             
         </div>

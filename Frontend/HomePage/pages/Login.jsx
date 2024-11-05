@@ -1,37 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import useNavigate and Link
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
-function Login() {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     setError('');
 
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Login successful!');
-        // Navigate to the dashboard or home page after login
-        navigate('/dashboard'); // Replace with your desired route
-      } else {
-        setError(data.message || 'Invalid email or password');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      setError('An error occurred. Please try again.');
+    // Simple check to simulate successful login
+    if (email && password) {
+      alert('Login successful!');
+      onLogin(); // Call the function to update login status
+      navigate('/'); // Redirect to the home page
+    } else {
+      setError('Please enter your email and password');
     }
   };
 

@@ -12,7 +12,7 @@ function CreateAccount() {
 
   const handleCheckEmail = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/check-email', {
+      const response = await fetch('/api/check-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,31 +22,32 @@ function CreateAccount() {
       const data = await response.json();
       return data.exists;
     } catch (error) {
-      setError('An error occurred while checking the email. Please try again.');
-      return true; // Assume the email exists to prevent accidental registration in case of errors
+      setError('Failed to check email. Please try again later.');
+      return false;
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
+    setSuccess(false);
 
-    const emailExists = await handleCheckEmail();
-    if (emailExists) {
-      setError('This email is already in use. Please use a different email.');
+    if (!email) {
+      setError('Email is required');
       setLoading(false);
       return;
     }
 
     // Basic validation
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     if (!emailPattern.test(email)) {
       setError('Please enter a valid email address');
       setLoading(false);
       return;
     }
 
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     if (!passwordPattern.test(password)) {
       setError('Password must be at least 6 characters and include at least one uppercase letter, one number, and one special character.');
       setLoading(false);
@@ -59,13 +60,19 @@ function CreateAccount() {
       return;
     }
 
+    const emailExists = await handleCheckEmail();
+    if (emailExists) {
+      setError('Email already exists');
+      setLoading(false);
+      return;
+    }
+
     // Proceed with account creation logic if all checks pass
-    setError('');
     setSuccess(true);
-    setLoading(false);
     setEmail('');
     setPassword('');
     setConfirmPassword('');
+    setLoading(false);
   };
 
   return (

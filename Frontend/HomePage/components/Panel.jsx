@@ -72,14 +72,6 @@ export default function Panel() {
               https://mui.com/material-ui/material-icons/
 
             */}
-          <SubMenu
-            backgroundColor='none'
-            icon={<BarChartIcon style={{ fontSize: '30px' }}/>} 
-            label="Charts">
-              <MenuItem className='selection-effect'> Pie charts </MenuItem>
-              <MenuItem className='selection-effect'> Line charts </MenuItem>
-          </SubMenu>
-
           
           {/*Edit Based on the Format Given*/}
           <MenuItem 
@@ -88,9 +80,6 @@ export default function Panel() {
           <MenuItem 
             icon={<TableRestaurantIcon style={{ fontSize: '30px' }} />} 
             component={<Link to="booking" />}> Booking </MenuItem>
-          <MenuItem 
-            icon={<LoginIcon style={{ fontSize: '30px' }} />} 
-            component={<Link to="Login" />}> Login </MenuItem>
           <MenuItem 
             icon={<InfoIcon style={{ fontSize: '30px' }} />} 
             component={<Link to="aboutus" />}> About Us </MenuItem>
