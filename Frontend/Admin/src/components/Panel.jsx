@@ -9,6 +9,11 @@ import Logo from '../public/collabkita-logo.png';
 import HomeIcon from '@mui/icons-material/Home';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import InfoIcon from '@mui/icons-material/Info';
+import CalendarIcon from '@mui/icons-material/CalendarToday';
+import LoginIcon from '@mui/icons-material/Login';
+import OverviewIcon from '@mui/icons-material/Dashboard';
+import CustomerIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 
 export default function Panel() {
@@ -72,25 +77,46 @@ export default function Panel() {
               https://mui.com/material-ui/material-icons/
 
             */}
+          <MenuItem
+            icon={<LoginIcon style={{ fontSize: '30px'}} />}
+            component={<Link to="login" />}> Login</MenuItem> 
+            
           <SubMenu
             backgroundColor='none'
-            icon={<BarChartIcon style={{ fontSize: '30px' }}/>} 
-            label="Charts">
-              <MenuItem className='selection-effect'> Pie charts </MenuItem>
-              <MenuItem className='selection-effect'> Line charts </MenuItem>
+            icon={<OverviewIcon style={{ fontSize: '30px' }}/>} 
+            label="Overview">
+              <MenuItem component={<Link to="/summary" />} className='selection-effect'> Booking Summary </MenuItem>
+              <MenuItem component={<Link to="/statistics" />} className='selection-effect'> Customer Statistics </MenuItem>
+          </SubMenu>
+
+          <SubMenu
+            backgroundColor='none'
+            icon={<CalendarIcon style={{ fontSize: '30px' }}/>} 
+            label="Booking">
+              <MenuItem component={<Link to="/new-booking" />} className='selection-effect'> New Booking </MenuItem>
+              <MenuItem component={<Link to="/upcoming-booking" />} className='selection-effect'> Upcoming Booking </MenuItem>
+              <MenuItem component={<Link to="/calendar" />} className='selection-effect'> Booking Calendar </MenuItem>
+          </SubMenu>
+
+          <SubMenu
+            backgroundColor='none'
+            icon={<CustomerIcon style={{ fontSize: '30px' }}/>} 
+            label="Customer">
+              <MenuItem component={<Link to="/profiles" />} className='selection-effect'> Customer Profiles </MenuItem>
+              <MenuItem component={<Link to="/feedback" />} className='selection-effect'> Customer Feedback </MenuItem>
+          </SubMenu>
+
+          <SubMenu
+            backgroundColor='none'
+            icon={<SettingsIcon style={{ fontSize: '30px' }}/>} 
+            label="Settings">
+              <MenuItem component={<Link to="/user-roles" />} className='selection-effect'> User Roles </MenuItem>
+              <MenuItem component={<Link to="/system-settings" />} className='selection-effect'> System Settings </MenuItem>
           </SubMenu>
 
           
           {/*Edit Based on the Format Given*/}
-          <MenuItem 
-            icon={<HomeIcon style={{ fontSize: '30px' }} />} 
-            component={<Link to="/" />}>  Home </MenuItem>
-          <MenuItem 
-            icon={<TableRestaurantIcon style={{ fontSize: '30px' }} />} 
-            component={<Link to="booking" />}> Booking </MenuItem>
-          <MenuItem 
-            icon={<InfoIcon style={{ fontSize: '30px' }} />} 
-            component={<Link to="aboutus" />}> About Us </MenuItem>
+
         </Menu>
       </Sidebar>
     </div>
