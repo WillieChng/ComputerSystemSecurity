@@ -9,7 +9,7 @@ import Logo from '../public/collabkita-logo.png';
 import HomeIcon from '@mui/icons-material/Home';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import InfoIcon from '@mui/icons-material/Info';
-
+import LoginIcon from '@mui/icons-material/Login';
 
 export default function Panel() {
   const [collapsed, setCollapsed] = React.useState(false);  
@@ -72,14 +72,6 @@ export default function Panel() {
               https://mui.com/material-ui/material-icons/
 
             */}
-          <SubMenu
-            backgroundColor='none'
-            icon={<BarChartIcon style={{ fontSize: '30px' }}/>} 
-            label="Charts">
-              <MenuItem className='selection-effect'> Pie charts </MenuItem>
-              <MenuItem className='selection-effect'> Line charts </MenuItem>
-          </SubMenu>
-
           
           {/*Edit Based on the Format Given*/}
           <MenuItem 
@@ -97,4 +89,3 @@ export default function Panel() {
     </div>
   );
 }
-

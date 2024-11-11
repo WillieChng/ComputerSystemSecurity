@@ -1,8 +1,7 @@
-
 /*Menu Effect*/
 .main-effect {
     display: flex;
-    height: 100%;
+    height: 118%;
     position: absolute;
     top: 0;
     right: 0;
@@ -63,6 +62,10 @@
     text-align: center;
     padding-bottom: 20px;
 }
+
+
+
+  
 
 
 
