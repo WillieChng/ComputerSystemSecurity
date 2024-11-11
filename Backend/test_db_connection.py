@@ -1,5 +1,11 @@
+import sys
+import os
+
+# Add the parent directory to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from sqlalchemy import text, select
-from Backend.models import User, Customer
+from Backend.models import Login, Customer, Booking, Room
 from Backend.app_db_init import db, app
 from tabulate import tabulate
 
@@ -10,16 +16,23 @@ with app.app_context():
 
 #Query the database
 def query():
-    user_list = []
+    booking_list = []
     customer_list = []
-
-    for instance in db.session.query(User).order_by(User.id):
-        user_dict = {
-        "User_ID": instance.id,
-        "Username": instance.username
-        }
-        user_list.append(user_dict)
+    room_list = []
     
+    for instance in db.session.query(Booking).order_by(Booking.customer_id):
+        booking_dict = {
+        "Booking_No": instance.booking_no,
+        "Trans_No": instance.trans_no,
+        "Pay_Method": instance.pay_method,
+        "Booking_Date": instance.booking_date,
+        "Booking_Start": instance.booking_start,
+        "Booking_End": instance.booking_end,
+        "Room_ID": instance.room_id,
+        "Customer_ID": instance.customer_id,
+        }
+        booking_list.append(booking_dict)
+
     for instance in db.session.query(Customer).order_by(Customer.customer_id):
         customer_dict = {
         "Customer_ID": instance.customer_id,
@@ -27,20 +40,35 @@ def query():
         "Last_Name": instance.last_name,
         "Gender": instance.gender,
         "Phone_Number": instance.phone_number,
-        "E-mail": instance.email,
+        "E-mail": db.session.query(Login.email).filter(Login.customer_id == instance.customer_id).first()[0],
         "Organisation": instance.org
         }
         customer_list.append(customer_dict)
 
-    return user_list, customer_list
+
+    for instance in db.session.query(Room).order_by(Room.room_id):
+        room_dict = {
+        "Room_ID": instance.room_id,
+        "Room_Name": instance.room_name,
+        "Room_Description": instance.desc,
+        "Room_Price": instance.price,
+        "Room_Amenities": instance.amenities,
+        "Room_Active": instance.active
+        }
+        room_list.append(room_dict)
+
+    return booking_list, customer_list, room_list
 
 #Display the query results from the query()
 def print_query():
-    user_list, customer_list = query()
-    print("Users:")
-    print(tabulate(user_list, headers='keys', tablefmt='pretty'))
+    booking_list, customer_list, room_list = query()
+    print("Bookings:")
+    print(tabulate(booking_list, headers='keys', tablefmt='pretty'))
     print("Customers:")
     print(tabulate(customer_list, headers='keys', tablefmt='pretty'))
+    print("Room:")
+    print(tabulate(room_list, headers='keys', tablefmt='pretty'))
+    
 
 def test_db_connection():
     with app.app_context():
