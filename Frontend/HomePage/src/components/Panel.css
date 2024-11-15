@@ -1,35 +1,72 @@
-
+body{
+    z-index: 5000;
+}
 /*Menu Effect*/
 .main-effect {
     display: flex;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     background-color: #62b287;
     color: white; /* Default font color */
     text-align: left;
+    transition: margin-left 0.3s ease;
 }
 
-.menu-effect{
+/* .main-effect.collapsed {
+    margin-left: 60px;
+} */
+
+/* .main-effect.expanded {
+    margin-right: 250px;
+} */
+
+/* .sidebar-collapsed .menu-item-text,
+.sidebar-collapsed .submenu-item-text {
+    display: none;
+} */
+
+/* .menu-effect {
     background-color: #90c2a7;
-}
+} */
 
-.selection-effect{
+.selection-effect {
     background-color: #78c79d;
     color: white;
 }
 
+/* .submenu-item-text {
+    display: block;
+    position: relative;
+} */
+
+/* Ensure the submenu items are displayed as a block and positioned correctly */
+.submenu-item {
+    display: block;
+    padding-left: 40px; /* Indent submenu items */
+}
+
+.menu-item {
+    margin-left: 20px;
+}
+
+.menu-icon {
+    margin-right: 30px;
+}
+
+/* .submenu-item:hover {
+    background-color: #78c79d;
+    color: white;
+} */
 
 /*Panel Button */
 .panel-collapsible {
     margin: 10px;
-    direction: rtl;
-    text-align: right;
 }
-  
+
 .panel-collapsible-button {
-    margin-right: 10px;
+    margin-right: 80%;
     background: none;
     border: 0;
     color: white;
@@ -38,11 +75,9 @@
     padding-bottom: 16px;
 }
 
-
 /* Account Side Panel Section */
-.account-menu{
+.account-menu {
     background-color: #90c2a7;
-    position: absolute;
     position: relative;
 }
 
@@ -51,9 +86,20 @@
     align-items: center;
     justify-content: center;
     padding-top: 10px;
-    padding: 10px;
 }
-  
+
+.account-menu-tab, .menu-item {
+    transition: transform 0.3s ease;
+}
+
+.account-menu-tab.collapsed, .menu-item.collapsed {
+    /* transform: translateX(80px);  */
+}
+
+/* .account-menu-tab.expanded, .menu-item.expanded {
+    transform: translateX(200px); 
+} */
+
 .account-menu-tab-image {
     width: 65px;
     height: 65px;
@@ -64,6 +110,10 @@
     padding-bottom: 20px;
 }
 
-
-
-  
+/* Ensure the submenu items are displayed correctly under the main menu item */
+/* .pro-sidebar .pro-menu .pro-menu-item .pro-inner-item .pro-inner-list {
+    display: block;
+    position: relative;
+    left: 0;
+    top: 0;
+} */

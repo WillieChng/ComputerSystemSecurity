@@ -1,0 +1,130 @@
+.about-us {
+    margin-left: 20px;
+    margin-right: 60px;
+    border: 1px solid pink;
+}
+
+.about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.story {
+    display: flex;
+    margin: 20px;
+    border: 1px solid black;
+}
+
+.story-content-1 {
+    /* margin-right: 60px; */
+    width: 180%;
+    height: 350px;
+    border: 1px solid black;
+    background: url('../public/story.jpg') no-repeat center center; /* Replace with your image path */
+}
+
+.story-content-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* margin-right: 160px; */
+    border: 1px solid black;
+    padding: 20px;
+    word-spacing: 3px; 
+    line-height: 23px;
+    
+}
+
+.who-features-container {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    margin: 20px;
+}
+
+.who, .features {
+    flex: 1;
+    margin: 10px;
+    word-spacing: 3px; 
+    line-height: 23px;
+    justify-content: center;
+}
+
+.who-1, .who-2, .who-3, .feature-sub {
+    display: flex;
+}
+
+.who-title, .feature-title {
+    margin-left: 10px;
+}
+
+.features {
+    /* margin-right: 160px; */
+}
+
+.who-content, .features-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.security {
+    display: flex;
+    margin: 20px;
+    border: 1px solid black;
+}
+
+.security-content-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 30px;
+}
+
+.security-image {
+    align-items: center;
+    margin-right: 180px;
+    border: 1px solid black;
+    width: 180%;
+    height: 400px;
+    background: url('../public/story.jpg') no-repeat center center; /* Replace with your image path */
+}
+
+.meet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.team {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    margin: 20px;
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.team-member img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}

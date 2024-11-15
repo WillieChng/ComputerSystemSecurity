@@ -1,7 +1,7 @@
 import {Link, useNavigate} from 'react-router-dom';
 import './Home.css';
 
-function Home() {
+export default function Home() {
     const navigate = useNavigate();
 
     const handleBookingClick = () => {
@@ -34,5 +34,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home;

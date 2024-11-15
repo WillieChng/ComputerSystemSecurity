@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-import BarChartIcon from '@mui/icons-material/BarChart';
+// import BarChartIcon from '@mui/icons-material/BarChart';
 import './Panel.css';
 import TopBar from "./TopBar.jsx";
 import Logo from '../public/collabkita-logo.png';
@@ -13,6 +13,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 export default function Panel() {
   const [collapsed, setCollapsed] = React.useState(false);  
+
   return (
     <div>
     <TopBar collapsed={collapsed} />
@@ -21,10 +22,7 @@ export default function Panel() {
       <Sidebar backgroundColor='none' collapsed={collapsed}>
         <Menu
           menuItemStyles={{
-            button: ({ level, active, disabled }) => {
-              // level - the menu item's level (0 for root, 1 for submenu items, etc.)
-              // active - true if the menu item is currently selected
-              // disabled - true if the menu item is disabled
+            button: ({ active, disabled }) => {
               return {
                 backgroundColor: active ? '#13395e' : undefined, // Example: Change background on active
                 color: disabled ? '#f5f5f5' : undefined, // Example: Change color on disabled
@@ -62,37 +60,26 @@ export default function Panel() {
             </div>
             )}
 
-
-          {/* This SubMenu is for Template For people who wants to do submenu
-              I cannot find ways to add selection-effect in the MenuItem so yeahhhh 
-              please implement it for every submenu
-
-
-              please check the latest icon here and import:
-              https://mui.com/material-ui/material-icons/
-
-            */}
-          <SubMenu
+          {/* <SubMenu
             backgroundColor='none'
             icon={<BarChartIcon style={{ fontSize: '30px' }}/>} 
             label="Charts">
               <MenuItem className='selection-effect'> Pie charts </MenuItem>
               <MenuItem className='selection-effect'> Line charts </MenuItem>
-          </SubMenu>
-
+          </SubMenu> */}
           
-          {/*Edit Based on the Format Given*/}
           <MenuItem 
-            icon={<HomeIcon style={{ fontSize: '30px' }} />} 
-            component={<Link to="/" />}>  Home </MenuItem>
+            icon={<HomeIcon style={{ fontSize: '30px' }} className='menu-icon' />} 
+            component={<Link to="/" />} className='menu-item'>  Home </MenuItem>
           <MenuItem 
-            icon={<TableRestaurantIcon style={{ fontSize: '30px' }} />} 
-            component={<Link to="booking" />}> Booking </MenuItem>
+            icon={<TableRestaurantIcon style={{ fontSize: '30px' }} className='menu-icon' />} 
+            component={<Link to="booking" />} className='menu-item'> Booking </MenuItem>
           <MenuItem 
-            icon={<InfoIcon style={{ fontSize: '30px' }} />} 
-            component={<Link to="aboutus" />}> About Us </MenuItem>
+            icon={<InfoIcon style={{ fontSize: '30px' }} className='menu-icon' />} 
+            component={<Link to="about-us" />} className='menu-item'> About Us </MenuItem>
         </Menu>
       </Sidebar>
+
     </div>
     </div>
   );

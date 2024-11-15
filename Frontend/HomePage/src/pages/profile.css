@@ -1,0 +1,40 @@
+.profile {
+    padding: 20px;
+}
+
+.profile-edit {
+    margin-top: 20px;
+}
+
+.row {
+    margin-bottom: 20px; /* Adjust the space between rows */
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box {
+    width: 70%;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.edit-button, .save-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    width: 100px;
+}
+
+.edit-button {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.save-button {
+    background-color: #5cb85c;
+    color: white;
+}

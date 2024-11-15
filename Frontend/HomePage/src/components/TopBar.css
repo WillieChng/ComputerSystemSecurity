@@ -53,6 +53,11 @@ header .nav-btn {
 	justify-content: center;
 }
 
+.main-logo h1{
+	padding-top: 6px;
+	padding-left: 4px;
+}
+
 .topbar-right{
 	display: flex; 
 	align-items: center;
@@ -67,12 +72,22 @@ h1{
 	position: relative; /* To position the dropdown content */
 	display: inline-block; /* To keep the dropdown within the flow of the content */
 }
-  
+ 
+.dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: 20px; /* Adjust this value to position the arrow */
+    right: 10px; /* Adjust this value to align the arrow */
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #78c79d transparent; /* Arrow color */
+}
+
 .dropdown-content {
     display: none; 
     position: absolute; 
-    background-color: #f9f9f9;
-    min-width: 160px;
+    background-color: #78c79d;
+    min-width: 100px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);  
     z-index: 1; 
 	right: 0;
@@ -85,8 +100,7 @@ h1{
     display: block; 
 }
 
-.dropdown-content  
- button {
+.dropdown-content button {
     background-color: transparent;
     position: relative;
     border: none ;
