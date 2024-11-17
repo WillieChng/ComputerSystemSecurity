@@ -219,7 +219,7 @@ export default function Booking() {
             selectedSlides.push(1);
         }
         if (selectedChoices.slot) {
-            selectedSlides.push();
+            selectedSlides.push(3);
         }
         return selectedSlides;
     };
@@ -366,12 +366,6 @@ export default function Booking() {
                         ))}
                     </div>
                     )}
-                </div>
-
-                <div className='buttonContainer'>
-                    <Link to="/about-us">
-                    <button className='button'>About Us</button>
-                    </Link>
                 </div>
         </div>
     );

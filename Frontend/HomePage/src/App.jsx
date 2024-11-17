@@ -4,15 +4,21 @@ import AboutUs from './pages/AboutUs';
 import Home from './pages/Home';
 import ContactUs from './pages/ContactUs';
 import Profile from './pages/profile';
-import Panel from './components/Panel';
+// import Panel from './components/Panel';
+import NavBar from './components/NavBar';
 import ScrollToTop from './components/scrollToTop';
+import Footer from './components/Footer';
+import './App.css';
 
 
 function App(){
     return(
         <Router>
             <ScrollToTop />
-            <Panel />
+            {/* <Panel /> */}
+            <NavBar />
+            <div className="App">
+                <div className="content">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/booking" element={<Booking />} />
@@ -20,6 +26,9 @@ function App(){
                 <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/profile" element={<Profile />} />
             </Routes>
+            </div>
+            <Footer />
+        </div>
         </Router>
     )
 }

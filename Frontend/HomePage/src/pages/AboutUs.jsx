@@ -33,14 +33,15 @@ export default function AboutUs(){
                     <div className='story-content-1'/>
                     <div className='story-content-2'>
                     <h3>Our Story</h3>    
+                    <br />
                     <p>CollabKita was founded with the vision of creating a shared space where entrepreneurs and small businesses can thrive. We understand the challenges faced by startups, and our goal is to offer a supportive environment that not only meets your workspace needs but also encourages networking and collaboration among like-minded professionals.</p>
                     </div>
                 </div>
 
             <div className='who-features-container'>
                 <div className='who'>
-                    <h3>Who We Serve</h3>
-                    <h5>At CollabKita, we cater to a diverse range of users, including:</h5>
+                    <h2>Who We Serve</h2>
+                    <h4>At CollabKita, we cater to a diverse range of users, including:</h4>
                     <ul>
                         <div className='who-content'>
                             <div className='who-content-main-1'>
@@ -50,6 +51,7 @@ export default function AboutUs(){
                                 </div>
                                 <div className='who-content-text'>Individuals/students looking for a professional environment to work independently.</div>
                             </div>
+                            <br/>
                             <div className='who-content-main-2'>
                                 <div className='who-2'>
                                     <RoomPreferencesIcon className='who-content-2'/>
@@ -57,6 +59,7 @@ export default function AboutUs(){
                                 </div>
                                 <div className='startups'>New businesses in need of flexible office solutions without the overhead costs of traditional leasing.</div>
                             </div>
+                            <br/>
                             <div className='who-content-main-3'>
                                 <div className='who-3'>
                                     <LaptopIcon className='who-content-3'/>
@@ -67,10 +70,11 @@ export default function AboutUs(){
                         </div>
                     </ul>
                 </div>
+
                 <div className='features'>
-                    <h3>Our Features</h3>
-                    <h5>We pride ourselves n providing an array of features designed to enhance your working experience:</h5>
-                    <ul>
+                    <h2>Our Features</h2>
+                    <h4>We pride ourselves and providing an array of features designed to enhance your working experience:</h4>
+                    <div className='features-content'>
                         <div className='feature-1'>
                             <div className='feature-sub'>
                                 <CardMembershipIcon className='feature-icon'/>
@@ -78,6 +82,7 @@ export default function AboutUs(){
                             </div>
                             <div className='feature-content'>Choose from private offices or shared desks tailored to your needs.</div>
                         </div>
+                        <br/>
                         <div className='feature-2'>
                             <div className='feature-sub'>
                                 <MeetingRoomIcon className='feature-icon'/>
@@ -85,6 +90,7 @@ export default function AboutUs(){
                             </div>
                             <div className='feature-content'>Enjoy reliable connectivity to keep you productive.</div>
                         </div>
+                        <br/>
                         <div className='feature-3'>
                             <div className='feature-sub'>
                                 <LockIcon className='feature-icon'/>
@@ -92,6 +98,7 @@ export default function AboutUs(){
                             </div>
                             <div className='feature-content'>Access private offices for focused work or confidential meetings, providing you with the privacy you need.</div>
                         </div>
+                        <br/>
                         <div className='feature-4'>
                             <div className='feature-sub'>
                                 <WifiIcon className='feature-icon'/>
@@ -99,7 +106,7 @@ export default function AboutUs(){
                             </div>
                             <div className='feature-content'>Stay connected with reliable, high-speed internet that keeps you productive throughout the day.</div>
                         </div>
-                    </ul>
+                    </div>
                 </div>
             </div>
 

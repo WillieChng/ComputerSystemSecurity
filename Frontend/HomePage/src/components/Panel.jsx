@@ -43,22 +43,16 @@ export default function Panel() {
               <MenuIcon style={{ fontSize: '38px' }}/>
             </button>
           </div>
-          {!collapsed && ( 
-            <div className='account-menu'>          
-              {!collapsed && (
-                <div className='account-menu-tab'>
-                  <img
-                    src={Logo}
-                    alt="Account"
-                    className='account-menu-tab-image'
-                  />
-                  <span>
-                    <h2> Main Menu </h2>
-                  </span>
-                </div>
-                )}
+          {!collapsed && (
+          <div className='account-menu'>
+            <div className='account-menu-tab'>
+              <img src={Logo} alt="Account" className='account-menu-tab-image' />
+              <span>
+                <h2> Main Menu </h2>
+              </span>
             </div>
-            )}
+          </div>
+        )}
 
           {/* <SubMenu
             backgroundColor='none'

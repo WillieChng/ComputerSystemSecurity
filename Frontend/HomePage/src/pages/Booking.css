@@ -216,7 +216,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 25%;
+    margin-left: 22%;
     margin-top: 24px;
     overflow: hidden; /* Ensure content doesn't overflow */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
@@ -256,7 +256,7 @@ body {
     justify-content: center;
     gap: 10px;
     margin-top: 15px;
-    margin-left: 10%;
+    margin-left: 5%;
 }
 
 .slide-options button {

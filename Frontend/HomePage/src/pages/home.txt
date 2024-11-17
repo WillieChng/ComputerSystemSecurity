@@ -1,0 +1,54 @@
+<h3 className='h3'>Why CollabKita?</h3>
+                <ul className='list'>
+                    <li className='listItem'>
+                        <CardMembershipIcon className='icon' />
+                        Flexible Membership Plans</li>
+                    <li className='listItem'>
+                        <MeetingRoomIcon className='icon' />
+                        Flexible Modern Workspaces</li>
+                    <li className='listItem'>
+                        <LockIcon className='icon' />
+                        Private rooms</li>
+                    <li className='listItem'>
+                        <WifiIcon className='icon' />
+                        High-Speed Internet</li>
+                </ul>
+
+
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import LockIcon from '@mui/icons-material/Lock';
+import WifiIcon from '@mui/icons-material/Wifi';
+
+
+.content {
+    flex: 1;
+}
+
+.h3{
+    text-align: center;
+    font-size: 28px;
+}
+
+.list{
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    padding: 0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.listItem{
+    font-size: 24px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    margin-bottom: 10px; 
+    margin-right: 20px; 
+    padding: 0;
+}
+
+.icon{
+    margin-right: 10px ;
+}

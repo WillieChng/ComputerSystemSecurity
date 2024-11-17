@@ -12,6 +12,7 @@ body{
     color: white; /* Default font color */
     text-align: left;
     transition: margin-left 0.3s ease;
+    z-index: 4;
 }
 
 /* .main-effect.collapsed {
@@ -110,6 +111,9 @@ body{
     padding-bottom: 20px;
 }
 
+sidebar {
+    z-index: 4; /* Ensure it is above the footer */
+}
 /* Ensure the submenu items are displayed correctly under the main menu item */
 /* .pro-sidebar .pro-menu .pro-menu-item .pro-inner-item .pro-inner-list {
     display: block;

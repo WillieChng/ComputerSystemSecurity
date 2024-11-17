@@ -1,0 +1,108 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #b0dbb2;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo img {
+    height: 50px;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin-right: 13rem;
+}
+
+.navbar-links li {
+    font-size: 1.2rem;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
+
+.navbar-links a.active {
+    font-weight: bold;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+}
+
+.account-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.account-selection-button {
+    background-color: transparent;
+    border: none;
+    padding: 1px;
+    border-radius: 45px;
+    transition: background-color 0.3s ease;
+    display: flex;
+}
+
+.account-selection-button:hover {
+    background-color: #78c79d;
+    cursor: pointer;
+}
+
+.account-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #78c79d;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+}
+
+.account-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    background-color: transparent;
+    position: relative;
+    border: none;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-content button:hover {
+    background-color: #c0c0c0;
+    color: #ffffff;
+}
+
+.dropdown-content button a {
+    display: block;
+    color: inherit;
+}
+
+.dropdown-content button a:hover {
+    background-color: transparent;
+    color: inherit;
+}
