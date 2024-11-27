@@ -15,7 +15,7 @@ function Login({ onLogin }) {
     // Simple check to simulate successful login
     if (email && password) {
       alert('Login successful!');
-      onLogin(); // Call the function to update login status
+      onLogin(email); // Call the function to update login status
       navigate('/'); // Redirect to the home page
     } else {
       setError('Please enter your email and password');

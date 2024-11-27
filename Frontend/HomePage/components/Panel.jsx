@@ -2,20 +2,17 @@ import React, { useState } from 'react';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-import BarChartIcon from '@mui/icons-material/BarChart';
 import './Panel.css';
 import TopBar from "./TopBar.jsx";
 import Logo from '../public/collabkita-logo.png';
 import HomeIcon from '@mui/icons-material/Home';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import InfoIcon from '@mui/icons-material/Info';
-import LoginIcon from '@mui/icons-material/Login';
 
 export default function Panel() {
   const [collapsed, setCollapsed] = React.useState(false);  
   return (
     <div>
-    <TopBar collapsed={collapsed} />
     {/* Do not Fucking Touch this or I will send you to see God personally myself*/}
     <div className='main-effect'>
       <Sidebar backgroundColor='none' collapsed={collapsed}>

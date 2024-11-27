@@ -4,7 +4,7 @@ import "./TopBar.css";
 import AccountPng from '../public/8345328.png';
 import Logo from '../public/collabkita-logo.png';
 
-export default function TopBar({ collapsed, onLogout }) {
+export default function TopBar({ collapsed, onLogout, isLoggedIn }) {
   return (
     <header className={collapsed ? 'collapsed' : ''}>
       <Link to="/" className="main-logo-link">
@@ -18,9 +18,11 @@ export default function TopBar({ collapsed, onLogout }) {
         </div>
       </Link>
 
-      <div className="topbar-right">
-        <AccountDropdown onLogout={onLogout} /> {/* Pass onLogout as a prop */}
-      </div>
+      {isLoggedIn && ( // Render dropdown only if logged in
+        <div className="topbar-right">
+          <AccountDropdown onLogout={onLogout} />
+        </div>
+      )}
     </header>
   );
 }
@@ -47,8 +49,8 @@ function AccountDropdown({ onLogout }) {
   }, []);
 
   const handleLogout = () => {
-    onLogout(); // Call the onLogout function passed as a prop
-    navigate('/'); // Redirect to the home page
+    onLogout(); // Call the logout logic from App.jsx
+    navigate('/login'); // Redirect to the login page
   };
 
   return (
