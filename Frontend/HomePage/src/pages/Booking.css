@@ -1,53 +1,463 @@
-/* Booking.css */
+.html {
+  scroll-behavior: smooth;
+}
+body {
+  opacity: 1;
+  transition: opacity 5s ease-in;
+  background-color: #fffafadd;
+}
 
-.booking-container {
-    text-align: center;
-    padding: 20px;
+.container {
+  text-align: center; 
+  padding: 17px;
+}
+
+.toc {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 300px;
+  height: auto;
+  overflow-y: auto;
+  z-index: 1000; /* Ensure it overrides other elements */
+}
+
+.toc ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding-left: 20px; /* Indent the list */
+}
+
+.toc li {
+  margin: 10px 0;
+}
+
+.toc li.active {
+  font-weight: bold;
+  list-style-type: disc; /* Show bullet point */
+  list-style-position: inside; /* Ensure bullet point is inside the list item */
+}
+
+.toc a {
+  text-decoration: none;
+  color: black;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+@keyframes flyIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
   }
-  
-  .booking-steps {
-    list-style-position: inside;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
+}
+
+.fly-in {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.how-title {
+  animation: flyIn 3s ease-out;
+  margin-top: 20px;
+}
+
+.how-container {
+  margin: 30px 10px 10px 10px;
+}
+
+.how-row-1, .how-row-2 {
+  display: flex;
+  justify-content: center;
+}
+
+.how-1, .how-2, .how-3, .how-4 {
+  width: 300px;
+  height: 200px;
+  margin: 40px 80px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 10px;
+  padding: 20px;
+  animation: flyIn 3s ease-out;
+}
+
+.summarize-icon, .calendar-icon, .payment-icon, .reaction-icon{
+  stroke: rgb(9, 55, 9);
+  color: white;
+  margin-right: 100px;
+}
+
+.how-1-no, .how-2-no, .how-3-no, .how-4-no {
+  color: white;
+  background-color: rgb(28, 28, 28);
+  width: 50px;
+  height: 40px;
+  line-height: 40px;
+  margin: 5px;
+  position: relative;
+}
+
+.how-1-no::after, .how-2-no::after, .how-3-no::after, .how-4-no::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(79, 77, 77);
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+}
+
+.how-1-text, .how-2-text, .how-3-text, .how-4-text {
+  text-align: left;
+  font-size: larger;
+  padding: 10px;
+}
+
+.how-1-text p, .how-2-text p, .how-3-text p, .how-4-text p{
+  margin-top: 5px;
+  font-size: 14px;
+  color:rgb(65, 65, 66);
+}
+
+.provide-container {
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.5s ease-out;
+}
+
+.provide-container.fly-in {
+  animation: flyIn 3s forwards;
+  opacity: 1; /* Ensure it becomes visible */
+}
+
+.provide-1 {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px 10px 10px 10px;
+}
+
+.where1, .pantry-title, .utilities h2 {
+  font-size: 30px;
+}
+
+.team, .private, .pantry1, .pantry2, .pantry3 {
+  margin: 20px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 10px 10px rgba(0, 0, 0.1, 0.1); /* Subtle shadow */
+  border-radius: 10px;
+  margin-left: 70px;;
+  animation: flyIn 3s ease-out;
+}
+
+.pantry {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.team, .private {
+  width: 400px;
+  height: 300px;
+}
+
+.pantry {
+  width: 300px;
+  height: 300px;
+}
+
+.large-icon{
+  font-size: 50px;
+  margin: 20px;
+}
+
+.button-book{
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #67be6a;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.selected-choices {
+  box-shadow: 0 10px 10px rgba(0, 0, 0.1, 0.1); /* Subtle shadow */
+  background-color: #e6e3e3;
+  border-radius: 10px;
+  position: absolute;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.selected-choices ol {
+  list-style-type: decimal !important; /* Use 'disc' for unordered lists */
+  padding-left: 10px;
+}
+
+.selected-choices li::marker {
+  color: #ff0000; /* Change this to your desired color */
+}
+
+.slideContainer {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  width: 60%; /* Adjust as needed */
+  height: 400px; /* Adjust as needed */
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 22%;
+  margin-top: 24px;
+  overflow: hidden; /* Ensure content doesn't overflow */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.slider {
+  position: relative;
+  margin: 40px 250px;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+
+.slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-left: 30px;
+}
+
+.slide-no {
+  font-size: 35px;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-left: 5%;
+}
+
+.slide-options button {
+  background-color: rgb(9, 55, 9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.categories {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between; /* Arrange categories side by side */
+  gap: 20px; /* Add space between categories */
+  height: 300px;
+}
+
+.category {
+  display: flex;
+  flex-direction: column; /* Arrange content vertically */
+  align-items: center; /* Center content horizontally */
+  gap: 10px;
+  border: 2px solid black; /* Add border around categories */
+  border-radius: 10px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.category h4 {
+  margin: 10px; 
   
-  .package-container,
-  .plans-container,
-  .calendar-container,
-  .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-  }
-  
-  .package-button,
-  .plans-button,
-  .about-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 7px;
-    padding: 10px;
-    width: 100px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .plans-button {
-    width: 185px;
-    height: 100px;
-  }
-  
-  .about-button {
-    padding: 10px 20px;
-    background-color: #558d57;
-    color: white;
-    border-radius: 10px;
-  }
-  
-  .package-button:hover,
-  .plans-button:hover,
-  .about-button:hover {
-    background-color: #8fb28c;
-  }
-  
+}
+
+.category-title-1, .category-title-2{
+  position: relative;
+  z-index: 10;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: #67be6a;
+}
+
+.category-title-1::before {
+  background: url('../public/by-pax.jpg') no-repeat center center; /* Replace with your image path */
+}
+.category-title-2::before {
+  background: url('../public/by-group.jpg') no-repeat center center; /* Replace with your image path */
+}
+
+.category-title-1::before, .category-title-2::before {
+  content: '';
+  position: absolute;
+  top: -20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%; /* Adjust as needed */
+  height: 110px; /* Adjust as needed */
+  background-size: cover;
+  border-bottom-left-radius: 90px;
+  border-bottom-right-radius: 90px;
+  z-index: -2; /* Ensure the half-circle is behind the title */
+}
+
+.category-title-1::after,
+.category-title-2::after {
+  content: '';
+  position: absolute;
+  top: -20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%; /* Adjust as needed */
+  height: 110px; /* Adjust as needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  border-bottom-left-radius: 90px;
+  border-bottom-right-radius: 90px;
+  z-index: 1; /* Ensure the overlay is above the image but below the title */
+}
+
+.packageButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #67be6a;
+  border-radius: 7px;
+  height: 40px;
+  width: 90px;
+  cursor: pointer;
+  color: #67be6a;
+  font-weight: bolder;
+  margin-top: 35px;
+  background-color: white;
+}
+
+.packageButton:hover {
+  background-color: #67be6a; /* Change to a different color when hovered */
+  color: white;
+}
+
+.packageButton.selected {
+  background-color: #4CAF50; /* Change to a different color when selected */
+  color: white;
+}
+
+.plansButton {
+  background-color: rgb(9, 55, 9);
+  color: white;
+  align-items: center; 
+  border: 1px solid black;
+  border-radius: 7px;
+  height: 45px;
+  width: 130px;
+  cursor: pointer;
+  margin-top: 35px;
+  padding: 10px;
+}
+
+ul {
+  list-style: none; /* Remove default bullet points */
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Add space between the icon and text */
+}
+
+.react-calendar {
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 15px;
+  font-size: large;
+}
+
+/* Customize the calendar navigation */
+.react-calendar__navigation {
+  background-color: #67be6a;
+  color: pink;
+  border-radius: 10px;
+}
+
+.react-calendar__navigation button {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Customize the calendar days */
+.react-calendar__month-view__days__day {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+
+/* Customize the selected day */
+.react-calendar__tile--active {
+  background-color: #67be6a;
+}
+
+.react-calendar__tile:hover {
+  background-color: #d4d4d4;
+}
+
+.button-prev, .button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  cursor: pointer;
+  background-color: #67be6a;
+  border-radius: 10px;
+}
+
+.button-prev {
+  left: 30px;
+}
+
+.button-next {
+  right: 30px;
+}
+
+.buttonContainer{
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #67be6a;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}

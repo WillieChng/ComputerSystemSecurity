@@ -64,7 +64,7 @@ function AccountDropdown() {
         </button>
         {isDropdownOpen && (
           <div className="dropdown-content"> 
-            <div><button><a href="#">Profile</a></button></div>
+            <div><button><Link to="/profile">Profile</Link></button></div>
             <div><button><a href="#">Settings</a></button></div>
             <div><button><a href="#">Logout</a></button></div>
           </div>
