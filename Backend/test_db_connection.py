@@ -13,6 +13,20 @@ from tabulate import tabulate
 with app.app_context():
     db.create_all()
 
+#add a password and user
+def add_user():
+    with app.app_context():
+        # Create a new customer
+        new_customer = Customer(first_name="Puvan", last_name="test", gender="M", phone_number="0123456789", org="test")
+        db.session.add(new_customer)
+        db.session.commit()  # Commit to get the customer_id
+
+        # Create a new login entry
+        new_login = Login(email="puvannesan@gmail.com", password="password", customer_id=new_customer.customer_id)
+        db.session.add(new_login)
+        db.session.commit()
+
+        print(f"Added new user: {new_customer.first_name} {new_customer.last_name}")
 
 #Query the database
 def query():
@@ -76,7 +90,9 @@ def test_db_connection():
             # Attempt to query the database
             db.session.execute(text('SELECT 1'))
             print("Database connection successful")
+            add_user()
             print_query()
+            
         except Exception as e:
             print(f"Database connection failed: {str(e)}")
 

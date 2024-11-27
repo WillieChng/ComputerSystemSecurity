@@ -1,23 +1,23 @@
 from sqlalchemy import text
-from Backend.models import User, Customer
-from Backend.app_db_init import db, app
+from models import Login, Customer
+from app_db_init import db, app
 from tabulate import tabulate
 
 #Create the database tables if they do not exist
 with app.app_context():
     db.create_all()
 
-user_list = []
+login_list = []
 customer_list = []
 
 #Query the database
 def query():
-    for instance in db.session.query(User).order_by(User.id):
+    for instance in db.session.query(Login).order_by(Login):
         user_dict = {
-        "User_ID": instance.id,
-        "Username": instance.username
+        "Customer_ID": instance.customer_id,
+        "Username": instance.email
         }
-        user_list.append(user_dict)
+        login_list.append(user_dict)
     
     for instance in db.session.query(Customer).order_by(Customer.customer_id):
         customer_dict = {
@@ -26,7 +26,6 @@ def query():
         "Last_Name": instance.last_name,
         "Gender": instance.gender,
         "Phone_Number": instance.phone_number,
-        "E-mail": instance.email,
         "Organisation": instance.org
         }
         customer_list.append(customer_dict)
@@ -35,7 +34,7 @@ def query():
 def print_query():
     query()
     print("Users:")
-    print(tabulate(user_list, headers='keys', tablefmt='pretty'))
+    print(tabulate(login_list, headers='keys', tablefmt='pretty'))
     print("Customers:")
     print(tabulate(customer_list, headers='keys', tablefmt='pretty'))
 

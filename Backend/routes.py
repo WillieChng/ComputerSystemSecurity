@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify, render_template, request, abort
-from Backend.models import User
+from email_ver import send_email
+from models import Login
 from functools import wraps
 from dotenv import load_dotenv
 import os
+import random
 
 # Create new blueprints
 api = Blueprint('api', __name__)
@@ -12,6 +14,9 @@ load_dotenv()
 
 # Import the API key
 API_KEY = os.getenv('API_KEY')
+
+# In-memory store for verification codes
+verification_codes = {}
 
 # Decorator to require an API key (UNDER WORKS)
 def require_api_key(f):
@@ -25,7 +30,7 @@ def require_api_key(f):
     return decorated_function
 
 # Create a route for the blueprint
-@api.route('/hello', methods=['GET'])
+@api.route('/hello', methods=['POST'])
 def get_data():
     return jsonify({"message": "Hello from Flask!"})
 
@@ -37,17 +42,38 @@ def home():
 # Create a route to handle the form submission
 @api.route('/login', methods=['POST'])
 def submit():
-    uname = request.form['username']
-    passwd = request.form['password']
+    email = request.json.get('email')
+    passwd = request.json.get('password')
 
     #Compare against database
-    user=User.query.filter_by(username=uname).first()
+    login=Login.query.filter_by(email=email).first()
 
-    if user and user.verify_password(passwd):
-        #show the homepage
-        return render_template('homepage.html')
+    if login and login.verify_password(passwd):
+        #generate and send verification code
+        code = random.randint(100000, 999999)
+        if send_email():
+            #store the code in memory
+            verification_codes[login.email] = code
+            return jsonify({"success": True}), 200
+        else:
+            return jsonify({"success": False, "message": "Email Verification Error"}), 501
     else:
         #show the login page with an error message
-        return render_template('login.html', error="Invalid username or password")
+        return jsonify({"success": False, "message": "Invalid credentials"}), 200
     
-    
+
+@api.route('/verify-code', methods=['POST'])
+def verify_code():
+    email = request.json.get('email')
+    input_code = request.json.get('code')
+
+    # Retrieve the code from the in-memory store
+    stored_code = verification_codes.get(email)
+
+    if stored_code and stored_code == int(input_code):
+        # Verification successful
+        del verification_codes[email]  
+        return jsonify({"success": True, "message": "Verification successful"}), 200
+    else:
+        # Verification failed
+        return jsonify({"success": False, "message": "Invalid verification code"}), 401

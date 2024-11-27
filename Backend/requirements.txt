@@ -4,3 +4,4 @@ python-dotenv
 pymysql
 tabulate
 werkzeug
+sendgrid

@@ -8,17 +8,35 @@ function Login({ onLogin }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Simple check to simulate successful login
-    if (email && password) {
-      alert('Login successful!');
-      onLogin(); // Call the function to update login status
-      navigate('/'); // Redirect to the home page
-    } else {
-      setError('Please enter your email and password');
+    try {
+      const auth_response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (auth_response.ok) {
+        const auth_data = await auth_response.json().catch(() => ({}));
+        
+        if (auth_data.success) {            
+          alert('Verification successful!');
+          onLogin(); // Call the function to update login status
+          navigate('/'); // Redirect to the home page
+        } else {
+          setError(auth_data.message || 'Invalid username or password');
+        }
+      }else{
+        setError('No server response. Please try again later.');
+        return;
+      }
+    } catch (error) {
+      setError(`An error occurred. Please try again later. ${error.message}`);
     }
   };
 
@@ -60,5 +78,4 @@ function Login({ onLogin }) {
     </div>
   );
 }
-
 export default Login;

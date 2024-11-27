@@ -1,12 +1,12 @@
-from .app_db_init import db
+from app_db_init import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # New table for users
 class Login(db.Model):
     __tablename__ = 'login'
 
-    email = db.Column('E-mail', db.String(50), primary_key=True ,nullable=False)
-    pword = db.Column(db.String(255), nullable=False)
+    email = db.Column('Email', db.String(50), primary_key=True ,nullable=False)
+    pword = db.Column('Pword', db.String(255), nullable=False)
     customer_id = db.Column('Customer_ID', db.Integer, db.ForeignKey('customer.Customer_ID'), nullable=False)
 
 
@@ -30,7 +30,7 @@ class Customer(db.Model):
     first_name = db.Column('First_Name', db.String(50), nullable=False)
     last_name = db.Column('Last_Name', db.String(50), nullable=False)
     gender = db.Column('Gender', db.CHAR(1), nullable=False)
-    phone_number = db.Column('Phone_Number', db.Integer, nullable=False)
+    phone_number = db.Column('Phone_Number', db.String(15), nullable=False)
     org = db.Column('Organisation', db.String(100), nullable=False)
 
     def __repr__(self):
