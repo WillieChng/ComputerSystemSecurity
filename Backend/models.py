@@ -9,8 +9,7 @@ class Login(db.Model):
     pword = db.Column('Pword', db.String(255), nullable=False)
     customer_id = db.Column('Customer_ID', db.Integer, db.ForeignKey('customer.Customer_ID'), nullable=False)
 
-
-    #prevent plaintext password from being read
+    # Prevent plaintext password from being read
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -21,22 +20,6 @@ class Login(db.Model):
 
     def verify_password(self, password):  
         return check_password_hash(self.pword, password)
-
-# Existing table for customers
-class Customer(db.Model):
-    __tablename__ = 'customer'
-
-    customer_id = db.Column('Customer_ID', db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    first_name = db.Column('First_Name', db.String(50), nullable=False)
-    last_name = db.Column('Last_Name', db.String(50), nullable=False)
-    gender = db.Column('Gender', db.CHAR(1), nullable=False)
-    phone_number = db.Column('Phone_Number', db.String(15), nullable=False)
-    org = db.Column('Organisation', db.String(100), nullable=False)
-
-    def __repr__(self):
-        return (f"Customer\nCustomer_ID: {self.customer_id}\nFirst Name: {self.first_name}"
-                f"\nLast Name: {self.last_name}\nGender: {self.gender}, Phone Number: {self.phone_number}"
-                f"\nOrganization: {self.org}")
 
 class Booking(db.Model):
     __tablename__ = 'booking'
@@ -49,7 +32,9 @@ class Booking(db.Model):
     booking_end = db.Column('Booking_End', db.Date, nullable=False)
     room_id = db.Column('Room_ID', db.Integer, db.ForeignKey('room.Room_ID'), nullable=False)
     customer_id = db.Column('Customer_ID', db.Integer, db.ForeignKey('customer.Customer_ID'), nullable=False)
-    
+
+    room = db.relationship('Room', back_populates='bookings')
+    customer = db.relationship('Customer', back_populates='bookings')
     
     def __repr__(self):
         return (f"Booking\nBooking No: {self.booking_no}\nTransaction No: {self.trans_no}\nPayment Method: {self.pay_method}"
@@ -62,12 +47,31 @@ class Room(db.Model):
     room_id = db.Column('Room_ID', db.Integer, primary_key=True, nullable=False, autoincrement=True)
     room_name = db.Column('Room_Name', db.String(50), nullable=False)
     desc = db.Column('Description', db.String(150), nullable=False)
-    price = db.Column('Price', db.Double, nullable=False)
+    price = db.Column('Price', db.Float, nullable=False)
     amenities = db.Column('Amenities', db.String(255), nullable=False) #separated by ','
     active = db.Column('Active', db.Boolean, nullable=False)
+    isSingle = db.Column('IsSingle', db.Boolean, nullable=False)
+
+    bookings = db.relationship('Booking', back_populates='room')
 
     def __repr__(self):
         return (f"Room\nRoom_ID: {self.room_id}\nRoom Name: {self.room_name}"
                 f"\nDescription: {self.desc}\nPrice (RM per night): {self.price}, Amenities {self.amenities}"
                 f"\nActive Status: {self.active}")
 
+class Customer(db.Model):
+    __tablename__ = 'customer'
+
+    customer_id = db.Column('Customer_ID', db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    first_name = db.Column('First_Name', db.String(50), nullable=False)
+    last_name = db.Column('Last_Name', db.String(50), nullable=False)
+    gender = db.Column('Gender', db.CHAR(1), nullable=False)
+    phone_number = db.Column('Phone_Number', db.String(15), nullable=False)
+    org = db.Column('Organisation', db.String(100), nullable=False)
+
+    bookings = db.relationship('Booking', back_populates='customer')
+
+    def __repr__(self):
+        return (f"Customer\nCustomer_ID: {self.customer_id}\nFirst Name: {self.first_name}"
+                f"\nLast Name: {self.last_name}\nGender: {self.gender}, Phone Number: {self.phone_number}"
+                f"\nOrganization: {self.org}")

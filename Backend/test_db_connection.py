@@ -28,6 +28,21 @@ def add_user():
 
         print(f"Added new user: {new_customer.first_name} {new_customer.last_name}")
 
+        # Create a new room
+        new_room = Room(room_name="Single Room 1", desc="Test Room Description", price=20, amenities="Test Amenities", active=True, isSingle=True)
+        db.session.add(new_room)
+        db.session.commit()
+
+        new_room = Room(room_name="Single Room 2", desc="Test Room Description", price=20, amenities="Test Amenities", active=True, isSingle=True)
+        db.session.add(new_room)
+        db.session.commit()
+
+        new_room = Room(room_name="Group Room 1", desc="Test Room Description", price=180, amenities="Test Amenities", active=True, isSingle=False)
+        db.session.add(new_room)
+        db.session.commit()
+
+        print(f"Added new room: {new_room.room_name}")
+
 #Query the database
 def query():
     booking_list = []

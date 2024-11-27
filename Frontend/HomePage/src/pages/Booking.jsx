@@ -25,7 +25,6 @@ export default function Booking() {
     const [currentSlide, setCurrentSlide] = useState(0); // for slider
     const [selectedChoices, setSelectedChoices] = useState({});
     const [value] = useState(new Date());  //calendar
-    const provideContainerRef = useRef(null);
     const howItWorksRef = useRef(null);
     const whatWeProvideRef = useRef(null);
     const bookNowRef = useRef(null);
@@ -113,18 +112,18 @@ export default function Booking() {
                     console.log(`Intersecting: ${entry.target.id}`);
                     setActiveToc(entry.target.id);
                     if (entry.target.id === 'what-we-provide') {
-                        provideContainerRef.current.classList.add('fly-in');
+                        whatWeProvideRef.current.classList.add('fly-in');
                     }
                 }
             });
         };
-        
+    
         const observer = new IntersectionObserver(handleIntersection, {
             root: null,
             rootMargin: '0px',
             threshold: 0.5
         });
-
+    
         const sections = [howItWorksRef.current, whatWeProvideRef.current, bookNowRef.current];
         sections.forEach(section => {
             if (section) {
@@ -132,7 +131,7 @@ export default function Booking() {
                 console.log(`Observing: ${section.id}`);
             }
         });
-
+    
         return () => {
             sections.forEach(section => {
                 if (section) {
@@ -151,14 +150,14 @@ export default function Booking() {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    provideContainerRef.current.classList.add('fly-in');
-                    observer.unobserve(provideContainerRef.current); // Stop observing after animation
+                    whatWeProvideRef.current.classList.add('fly-in');
+                    observer.unobserve(whatWeProvideRef.current); // Stop observing after animation
                 }
             },
             { threshold: 0.1 } // Trigger when 10% of the element is visible
         );
 
-        const currentRef = provideContainerRef.current;
+        const currentRef = whatWeProvideRef.current;
 
         if (currentRef) {
             observer.observe(currentRef);
@@ -223,22 +222,50 @@ export default function Booking() {
         }
         return selectedSlides;
     };
-    
+
+    const handleBookNow = async () => {
+        if (!selectedChoices.type || !selectedChoices.plan || !selectedChoices.slot) {
+            alert('Please select all options before booking');
+        } else {
+            console.log('Booking:', selectedChoices);
+            try {
+                const response = await fetch('/api/bookNow', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(selectedChoices),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                console.log('Booking successful:', data);
+                // Handle successful booking (e.g., show a success message, redirect, etc.)
+            } catch (error) {
+                console.error('Error booking:', error);
+                // Handle error (e.g., show an error message)
+            }
+        }
+    };
+
     return (
         <div className='container'>
-            <div className='toc'>
-                <ul>
-                    <li className={`${activeToc === 'how-it-works' ? 'active bold' : ''}`}>
-                        <a href="#how-it-works" onClick={() => handleTocClick(howItWorksRef, 'how-it-works')}>How CollabKita Works?</a>
-                    </li>
-                    <li className={`${activeToc === 'what-we-provide' ? 'active bold' : ''}`}>
-                        <a href="#what-we-provide" onClick={() => handleTocClick(whatWeProvideRef, 'what-we-provide')}>What CollabKita provides</a>
-                    </li>
-                    <li className={`${activeToc === 'book-now' ? 'active bold' : ''}`}>
-                        <a href="#book-now" onClick={() => handleTocClick(bookNowRef, 'book-now')}>Book Now</a>
-                    </li>
-                </ul>
-            </div>
+                <div className='toc'>
+                    <ul>
+                        <li className={`${activeToc === 'how-it-works' ? 'active bold' : ''}`}>
+                            <a href="#how-it-works" onClick={() => handleTocClick(howItWorksRef, 'how-it-works')}>How CollabKita Works?</a>
+                        </li>
+                        <li className={`${activeToc === 'what-we-provide' ? 'active bold' : ''}`}>
+                            <a href="#what-we-provide" onClick={() => handleTocClick(whatWeProvideRef, 'what-we-provide')}>What CollabKita provides</a>
+                        </li>
+                        <li className={`${activeToc === 'book-now' ? 'active bold' : ''}`}>
+                            <a href="#book-now" onClick={() => handleTocClick(bookNowRef, 'book-now')}>Book Now</a>
+                        </li>
+                    </ul>
+                </div>
                 <h1 className='how-title'id='how-it-works' ref={howItWorksRef}>How CollabKita Works?</h1>
                 <div className='how-container'>
                     <div className='how-row-1'>
@@ -300,18 +327,18 @@ export default function Booking() {
                         <div>
                             <h2 className='where1'>for group</h2>
                             <img src={team} alt='Team' className='team'/>
-                            </div>
+                        </div>
                         <div>
                             <h2 className='where1'>for private</h2>
                             <img src={personal} alt='Private' className='private'/>
-                            </div>
+                        </div>
                     </div>
                         <div className='provide-2'>
                             <h2 className='pantry-title'>Pantry for everyone</h2>
                             <div className='pantry'>
-                            <img src={pantry1} alt='Pantry-1' className='pantry1'/>
-                            <img src={pantry2} alt='Pantry-2' className='pantry2'/>
-                            <img src={pantry3} alt='Pantry-3' className='pantry3'/>
+                                <img src={pantry1} alt='Pantry-1' className='pantry1'/>
+                                <img src={pantry2} alt='Pantry-2' className='pantry2'/>
+                                <img src={pantry3} alt='Pantry-3' className='pantry3'/>
                             </div>
                         </div>
                         <div className='utilities'>
@@ -323,7 +350,7 @@ export default function Booking() {
                             <MdSupportAgent className='large-icon'/>
                         </div>
                 </div>
-                <button className='button-book' id='book-now' ref={bookNowRef}>Book Now</button>
+             <button className='button-book' id='book-now' ref={bookNowRef} onClick={handleBookNow}>Book Now</button>
 
                 <div className='slider'>
                     {Object.keys(selectedChoices).length > 0 && (

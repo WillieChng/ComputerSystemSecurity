@@ -5,3 +5,4 @@ pymysql
 tabulate
 werkzeug
 sendgrid
+cryptography
