@@ -22,7 +22,7 @@ def add_user():
         db.session.commit()  # Commit to get the customer_id
 
         # Create a new login entry
-        new_login = Login(email="puvannesan@gmail.com", password="password", customer_id=new_customer.customer_id)
+        new_login = Login(email="puvannesan@gmail.com", password="password", auth=True, customer_id=new_customer.customer_id)
         db.session.add(new_login)
         db.session.commit()
 

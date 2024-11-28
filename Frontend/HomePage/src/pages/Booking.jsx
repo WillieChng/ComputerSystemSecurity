@@ -97,7 +97,11 @@ export default function Booking() {
                 <div className='slideContainer'>
                     <div className='slide4'>
                         <div className='calendar'>
-                            <Calendar onChange={(date) => setSelectedChoices({ ...selectedChoices, slot: date })} value={value} />
+                            <Calendar 
+                            onChange={(date) => setSelectedChoices({ ...selectedChoices, slot: date })} 
+                            value={value}
+                            minDate={new Date()} // Prevent selecting dates before today
+                            />
                         </div>
                     </div>
                 </div>

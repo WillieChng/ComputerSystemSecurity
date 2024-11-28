@@ -7,6 +7,7 @@ class Login(db.Model):
 
     email = db.Column('Email', db.String(50), primary_key=True ,nullable=False)
     pword = db.Column('Pword', db.String(255), nullable=False)
+    auth = db.Column('Auth', db.Boolean, nullable=False)
     customer_id = db.Column('Customer_ID', db.Integer, db.ForeignKey('customer.Customer_ID'), nullable=False)
 
     # Prevent plaintext password from being read

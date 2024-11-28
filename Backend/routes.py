@@ -159,8 +159,8 @@ def book_now():
 
     if available_room:
         # Get customer_id from session
-        customer_id = 1 #session.get('customer_id')
-        if not customer_id:
+        user=session.get('user_id')
+        if not user:
             return jsonify({"success": False, "message": "User not authenticated"}), 401
 
         new_booking = Booking(
@@ -170,7 +170,7 @@ def book_now():
             booking_start=start_date,
             booking_end=end_date,
             room_id=available_room.room_id,
-            customer_id=customer_id
+            customer_id=user
         )
         db.session.add(new_booking)
         db.session.commit()
