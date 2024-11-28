@@ -54,14 +54,6 @@ export default function Panel({onLogout}) {
             </div>
           </div>
         )}
-
-          {/* <SubMenu
-            backgroundColor='none'
-            icon={<BarChartIcon style={{ fontSize: '30px' }}/>} 
-            label="Charts">
-              <MenuItem className='selection-effect'> Pie charts </MenuItem>
-              <MenuItem className='selection-effect'> Line charts </MenuItem>
-          </SubMenu> */}
           
           <MenuItem 
             icon={<HomeIcon style={{ fontSize: '30px' }} className='menu-icon' />} 

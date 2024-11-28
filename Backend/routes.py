@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, render_template, request, abort, session
 from email_ver import send_email
-from models import Login, Room, Booking
+from models import Login, Room, Booking, Customer
 from app_db_init import db
 from functools import wraps
 from dotenv import load_dotenv
@@ -164,8 +164,8 @@ def book_now():
             return jsonify({"success": False, "message": "User not authenticated"}), 401
 
         new_booking = Booking(
-            trans_no='TRANS123',  # Example transaction number, replace with actual
-            pay_method='Credit Card',  # Example payment method, replace with actual
+            trans_no='TRANS123',  # To be provided by payment gateway
+            pay_method='Credit Card',  # To be provided by payment gateway
             booking_date=booking_date,
             booking_start=start_date,
             booking_end=end_date,
@@ -179,3 +179,43 @@ def book_now():
     else:
         return jsonify({"success": False, "message": "No available rooms for the selected date range"}), 404
     
+
+@api.route('/create-account', methods=['POST'])
+def create_account():
+    data = request.json
+    first_name = data.get('firstName')
+    last_name = data.get('lastName')
+    gender = data.get('gender')
+    phone = data.get('phone')
+    org = data.get('org')
+    email = data.get('email')
+    password = data.get('password')
+
+    # Check if the email already exists
+    existing_user = Login.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"success": False, "message": "Email already exists"}), 400
+
+    # Create a new user
+    new_user = Customer(
+        first_name=first_name,
+        last_name=last_name,
+        gender=gender,
+        phone_number=phone,
+        org=org,
+    )
+    db.session.add(new_user)
+    db.session.commit()
+
+    new_login = Login(
+        email=email, 
+        auth=False, 
+        customer_id=new_user.customer_id
+    )
+    new_login.password = password # Hash the password
+    
+    db.session.add(new_login)
+    db.session.commit()
+    
+    # Create a new login entry
+    return jsonify({"success": True, "message": "Account successfully created"}), 201
