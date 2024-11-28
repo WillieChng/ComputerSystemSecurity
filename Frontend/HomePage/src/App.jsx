@@ -10,6 +10,7 @@ import Booking from './pages/Booking.jsx';
 import Home from './pages/Home.jsx';
 import AboutUs from './pages/AboutUs.jsx';
 import Panel from './components/Panel.jsx';
+import Settings from '../pages/Settings.jsx';
 import NavBar from './components/NavBar';
 import ScrollToTop from './components/scrollToTop';
 import Footer from './components/Footer';
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={isLoggedIn ? <Settings /> : <Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   );
