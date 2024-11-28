@@ -179,7 +179,6 @@ def book_now():
     else:
         return jsonify({"success": False, "message": "No available rooms for the selected date range"}), 404
     
-
 @api.route('/create-account', methods=['POST'])
 def create_account():
     data = request.json
@@ -219,3 +218,43 @@ def create_account():
     
     # Create a new login entry
     return jsonify({"success": True, "message": "Account successfully created"}), 201
+
+def admin_login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'admin_id' not in session:
+            return jsonify({"success": False, "message": "Admin not authenticated"}), 401
+        return f(*args, **kwargs)
+    return decorated_function
+
+@api.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    email = request.json.get('email')
+    passwd = request.json.get('password')
+
+    # Compare against database
+    admin = Login.query.filter_by(email=email, auth=True).first()
+
+    if admin and admin.verify_password(passwd):
+        session['admin_id'] = admin.customer_id
+        return jsonify({"success": True}), 200
+    else:
+        return jsonify({"success": False, "message": "Invalid credentials"}), 200
+
+@api.route('/api/admin/check-auth', methods=['GET'])
+def admin_check_auth():
+    if 'admin_id' in session:
+        return jsonify({"authenticated": True}), 200
+    else:
+        return jsonify({"authenticated": False}), 401
+
+# Update admin-protected routes
+@api.route('/api/admin/protected-route', methods=['GET'])
+@admin_login_required
+def admin_protected():
+    return jsonify({"message": "This is a protected admin route"}), 200
+
+@api.route('/api/admin/logout', methods=['POST'])
+def admin_logout():
+    session.pop('admin_id', None)
+    return jsonify({"success": True}), 200
