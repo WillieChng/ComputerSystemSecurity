@@ -1,32 +1,47 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function AdminLogin() {
+function AdminLogin({ onLogin }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  const handleLogin = (event) => {
-    event.preventDefault(); // Prevent form submission
+  const handleLogin = async (event) => {
+    event.preventDefault();
 
-    // Check if username and password are empty
-    if (username === '' || password === '') {
-      alert('Please fill out both the username and password fields.');
-    } else {
-      // Simulate login process
-      if (username === 'admin' && password === 'password123') {
-        alert('Login successful!');
-        navigate('/overview'); // Redirect to the overview page after login
-      } else {
-        alert('Incorrect username or password. Please try again.');
+    // Send login credentials to the backend
+    try {
+      const response = await fetch(`${apiUrl}/api/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Include cookies in the request
+        body: JSON.stringify({ email: username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Login successful!');
+        onLogin(); // Call the onLogin function passed as a prop
+        navigate('/'); // Redirect to the home page after login
+      } else {
+        alert(data.message || 'Incorrect username or password. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      alert('An error occurred during login. Please try again later.');
     }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.loginContainer}>
-        <h2>Login with Password</h2>
+        <h2>Admin Login</h2>
         <form onSubmit={handleLogin}>
           <div style={styles.inputGroup}>
             <label htmlFor="username">Username</label>
@@ -62,24 +77,17 @@ function AdminLogin() {
 // Inline styles
 const styles = {
   container: {
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#f4f4f4',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    margin: 0,
+    backgroundColor: '#f5f5f5',
   },
   loginContainer: {
-    background: 'white',
+    backgroundColor: 'white',
     padding: '20px',
     borderRadius: '5px',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-    width: '300px',
-    textAlign: 'center',
-  },
-  h2: {
-    marginBottom: '20px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
   },
   inputGroup: {
     marginBottom: '15px',
@@ -87,18 +95,16 @@ const styles = {
   input: {
     width: '100%',
     padding: '10px',
-    marginTop: '5px',
-    border: '1px solid #ccc',
-    borderRadius: '3px',
+    boxSizing: 'border-box',
   },
   button: {
-    backgroundColor: '#28a745',
+    width: '100%',
+    padding: '10px',
+    backgroundColor: '#007bff',
     color: 'white',
     border: 'none',
-    padding: '10px 15px',
-    borderRadius: '3px',
+    borderRadius: '5px',
     cursor: 'pointer',
-    width: '100%',
   },
 };
 
