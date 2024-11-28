@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1>Company Name</h1>
+        <div class="menu-icon">☰</div>
+    </div>
+
+    <div class="container">
+        <div class="dropdown" onclick="toggleDropdown()">
+            <span class="dropdown-title">Add New Booking</span>
+            <span>▼</span>
+        </div>
+
+        <div class="dropdown-content" id="dropdown-content">
+            <a href="#upcoming-bookings">Upcoming Bookings</a>
+            <a href="#booking-calendar">Booking Calendar</a>
+            <a href="#add-new-booking">Add New Booking</a>
+        </div>
+
+        <div class="booking-form">
+            <h2>Booking</h2>
+            <div class="form-field">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" placeholder="Enter your full name">
+            </div>
+            <div class="form-field">
+                <label for="contact">Contact No.</label>
+                <input type="text" id="contact" name="contact" placeholder="Enter your contact number">
+            </div>
+            <div class="form-field">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div class="form-field">
+                <label for="time">Time</label>
+                <input type="time" id="time" name="time">
+            </div>
+            <div class="form-field">
+                <label for="booking-type">Booking Type</label>
+                <select id="booking-type" name="booking-type">
+                    <option value="day-pass">Day Pass</option>
+                    <option value="prepaid-pass">Prepaid Pass</option>
+                    <option value="monthly-pass">Monthly Pass</option>
+                </select>
+            </div>
+            <button class="book-now-btn">Book Now</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
