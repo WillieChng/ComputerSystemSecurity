@@ -14,8 +14,9 @@ function AdminLogin({ onLogin }) {
     try {
       const response = await fetch(`${apiUrl}/api/admin/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Include cookies in the request
+        headers: { 
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email: username, password }),
       });
 
@@ -26,6 +27,7 @@ function AdminLogin({ onLogin }) {
       const data = await response.json();
 
       if (data.success) {
+        localStorage.setItem('token', data.token);
         alert('Login successful!');
         onLogin(); // Call the onLogin function passed as a prop
         navigate('/'); // Redirect to the home page after login

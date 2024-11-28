@@ -21,9 +21,13 @@ function App() {
   useEffect(() => {
       const checkAuth = async () => {
           try {
+              const token = localStorage.getItem('token');
               const response = await fetch(`${apiUrl}/api/admin/check-auth`, {
                   method: 'GET',
-                  credentials: 'include',
+                  headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                  },
               });
               if (response.ok) {
                   setIsLoggedIn(true);

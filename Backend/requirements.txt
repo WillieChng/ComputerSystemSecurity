@@ -8,3 +8,4 @@ sendgrid
 cryptography
 flask_session
 flask-cors
+PyJWT

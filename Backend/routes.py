@@ -5,6 +5,7 @@ from app_db_init import db
 from functools import wraps
 from dotenv import load_dotenv
 import os
+import jwt
 import random
 from datetime import datetime, timedelta
 
@@ -24,8 +25,10 @@ verification_codes = {}
 def require_api_key(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        received_api_key = request.headers.get('api')
-        #print("Received API Key:", received_api_key)
+        print("Request Headers:", request.headers)
+        received_api_key = request.headers.get('x-apikey')
+        print("Received API Key:", received_api_key)
+        print("Expected API Key:", API_KEY)
         if received_api_key != API_KEY:
             abort(401)  # Unauthorized access
         return f(*args, **kwargs)
@@ -222,8 +225,18 @@ def create_account():
 def admin_login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'admin_id' not in session:
-            return jsonify({"success": False, "message": "Admin not authenticated"}), 401
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({"success": False, "message": "Token is missing"}), 401
+        if token.startswith('Bearer '):
+            token = token.split(' ')[1]
+        try:
+            data = jwt.decode(token, API_KEY, algorithms=['HS256'])
+            current_admin = Login.query.get(data['admin_id'])
+        except jwt.ExpiredSignatureError:
+            return jsonify({"success": False, "message": "Token has expired"}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({"success": False, "message": "Token is invalid"}), 401
         return f(*args, **kwargs)
     return decorated_function
 
@@ -236,17 +249,18 @@ def admin_login():
     admin = Login.query.filter_by(email=email, auth=True).first()
 
     if admin and admin.verify_password(passwd):
-        session['admin_id'] = admin.customer_id
-        return jsonify({"success": True}), 200
+        token = jwt.encode({
+            'admin_id': admin.customer_id,
+            'exp': datetime.utcnow() + timedelta(hours=1)
+        }, API_KEY, algorithm='HS256')
+        return jsonify({"success": True, "token": token}), 200
     else:
         return jsonify({"success": False, "message": "Invalid credentials"}), 200
 
 @api.route('/api/admin/check-auth', methods=['GET'])
+@admin_login_required
 def admin_check_auth():
-    if 'admin_id' in session:
         return jsonify({"authenticated": True}), 200
-    else:
-        return jsonify({"authenticated": False}), 401
 
 # Update admin-protected routes
 @api.route('/api/admin/protected-route', methods=['GET'])
@@ -256,7 +270,6 @@ def admin_protected():
 
 @api.route('/api/admin/logout', methods=['POST'])
 def admin_logout():
-    session.pop('admin_id', None)
     return jsonify({"success": True}), 200
 
 @api.route('/getPlans', methods=['GET'])

@@ -48,11 +48,17 @@ function AccountDropdown({ onLogout }) {
 
   const handleLogout = async () => {
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`${apiUrl}/api/admin/logout`, {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
         credentials: 'include',
       });
       if (response.ok) {
+        localStorage.removeItem('token');
         if (onLogout) {
           onLogout();
         }
@@ -88,8 +94,6 @@ function AccountDropdown({ onLogout }) {
       </button>
       {isDropdownOpen && (
         <div className="dropdown-content">
-          <div><button><Link to="/profile">Profile</Link></button></div>
-          <div><button><Link to="/settings">Settings</Link></button></div>
           <div><button onClick={handleLogout}>Logout</button></div>
         </div>
       )}

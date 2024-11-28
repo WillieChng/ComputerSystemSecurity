@@ -91,6 +91,7 @@ h1{
     position: relative;
     border: none ;
     transition: all 0.2s ease; 
+	height: 50px;
     width: 100%;
     text-align: left; /* Align the button text to the left */
 }
