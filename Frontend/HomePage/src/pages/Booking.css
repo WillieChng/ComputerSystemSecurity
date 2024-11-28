@@ -194,6 +194,7 @@ body {
   box-shadow: 0 10px 10px rgba(0, 0, 0.1, 0.1); /* Subtle shadow */
   background-color: #e6e3e3;
   border-radius: 10px;
+  margin-top: 50px;
   position: absolute;
   padding: 5px 10px;
   font-size: 14px;
@@ -373,7 +374,7 @@ body {
   align-items: center; 
   border: 1px solid black;
   border-radius: 7px;
-  height: 45px;
+  height: 7em;
   width: 130px;
   cursor: pointer;
   margin-top: 35px;

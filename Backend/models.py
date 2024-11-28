@@ -48,7 +48,6 @@ class Room(db.Model):
     room_id = db.Column('Room_ID', db.Integer, primary_key=True, nullable=False, autoincrement=True)
     room_name = db.Column('Room_Name', db.String(50), nullable=False)
     desc = db.Column('Description', db.String(150), nullable=False)
-    price = db.Column('Price', db.Float, nullable=False)
     amenities = db.Column('Amenities', db.String(255), nullable=False) #separated by ','
     active = db.Column('Active', db.Boolean, nullable=False)
     isSingle = db.Column('IsSingle', db.Boolean, nullable=False)
@@ -76,3 +75,16 @@ class Customer(db.Model):
         return (f"Customer\nCustomer_ID: {self.customer_id}\nFirst Name: {self.first_name}"
                 f"\nLast Name: {self.last_name}\nGender: {self.gender}, Phone Number: {self.phone_number}"
                 f"\nOrganization: {self.org}")
+
+class Price(db.Model):
+    __tablename__ = 'price'
+
+    price_id = db.Column('Price_ID', db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    room_type = db.Column('Room_Type', db.String(50), nullable=False)
+    price = db.Column('Price', db.Double, nullable=False)
+    week_discount = db.Column('Week_Discount', db.Double, nullable=False)
+    month_discount = db.Column('Month_Discount', db.Double, nullable=False)
+
+    def __repr__(self):
+        return (f"Price\nPrice_ID: {self.price_id}\nRoom Type: {self.room_type}"
+                f"\nPrice: {self.price}\nWeek Discount: {self.weekDiscount}, Month Discount: {self.monthDiscount}")

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './Booking.css';
+import Confirmation from './Confirmation';
+import BookingComplete from './BookingComplete';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -21,6 +23,7 @@ import { TiWiFi } from "react-icons/ti";
 import { AiFillPrinter } from "react-icons/ai";
 import { MdSupportAgent } from "react-icons/md";
 
+
 export default function Booking() {
     const [currentSlide, setCurrentSlide] = useState(0); // for slider
     const [selectedChoices, setSelectedChoices] = useState({});
@@ -28,7 +31,38 @@ export default function Booking() {
     const howItWorksRef = useRef(null);
     const whatWeProvideRef = useRef(null);
     const bookNowRef = useRef(null);
+    const [plans, setPlans] = useState([]);
     const [activeToc, setActiveToc] = useState(null);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showBookingComplete, setShowBookingComplete] = useState(false);
+
+    // Calculate the next day from the current date
+    const nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() + 1);
+    
+    const fetchPlans = async () => {
+        try {
+            const response = await fetch('/api/getPlans'); // Replace with your actual API endpoint
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setPlans(data);
+        } catch (error) {
+            console.error('Error fetching plans:', error);
+        }
+    };
+
+    // Fetch plans when the component mounts
+    useEffect(() => {
+        fetchPlans();
+    }, []);
+
+    const resetBooking = () => {
+        setSelectedChoices({});
+        setCurrentSlide(0);
+        setShowConfirmation(false);
+    }
 
     const slides = [
         {
@@ -70,9 +104,13 @@ export default function Booking() {
             content: (
                 <div className='slideContainer'>
                     <div className='slide2'>
-                    <button className='plansButton' onClick={() => handlePlanSelection('DAY PASS')}>DAY PASS <br />RM 20 /day</button>
-                    <button className='plansButton' onClick={() => handlePlanSelection('WEEKLY PASS')}>WEEKLY PASS (5days) <br/>RM 90 (10% OFF)</button>
-                    <button className='plansButton' onClick={() => handlePlanSelection('MONTHLY PASS')}>MONTHLY PASS (20days) <br/>RM 340 (15% OFF)</button>
+                    {plans.length > 0 && (
+                        <>
+                            <button className='plansButton' onClick={() => handlePlanSelection({ name: 'DAY PASS', price: plans[0].price })}>DAY PASS <br />{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MYR' }).format(plans[0].price)} /day</button>
+                            <button className='plansButton' onClick={() => handlePlanSelection({ name: 'WEEKLY PASS (7 Days)', price: plans[0].weekly_price })}>WEEKLY PASS (7 days) <br/>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MYR' }).format(plans[0].weekly_price)} (10% OFF)</button>
+                            <button className='plansButton' onClick={() => handlePlanSelection({ name: 'MONTHLY PASS (30 Days)', price: plans[0].monthly_price })}>MONTHLY PASS (30 days) <br/>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MYR' }).format(plans[0].monthly_price)} (15% OFF)</button>
+                        </>
+                    )}
                     </div>
                 </div>
             )
@@ -83,9 +121,13 @@ export default function Booking() {
             content: (
             <div className='slideContainer'>
                 <div className='slide3'>
-                    <button className='plansButton' onClick={() => handlePlanSelection('DAY PASS')}>DAY PASS <br />RM 180 /day</button>
-                    <button className='plansButton' onClick={() => handlePlanSelection('WEEKLY PASS')}>WEEKLY PASS (5days) <br/>RM 765 (15% OFF)</button>
-                    <button className='plansButton' onClick={() => handlePlanSelection('MONTHLY PASS')}>MONTHLY PASS (20days) <br/>RM 2720 (20% OFF)</button>
+                {plans.length > 1 && (
+                    <>
+                        <button className='plansButton' onClick={() => handlePlanSelection({ name: 'DAY PASS', price: plans[1].price })}>DAY PASS <br />{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MYR' }).format(plans[1].price)} /day</button>
+                        <button className='plansButton' onClick={() => handlePlanSelection({ name: 'WEEKLY PASS (7 Days)', price: plans[1].weekly_price })}>WEEKLY PASS (7 days) <br/>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MYR' }).format(plans[1].weekly_price)} (15% OFF)</button>
+                        <button className='plansButton' onClick={() => handlePlanSelection({ name: 'MONTHLY PASS (30 Days)', price: plans[1].monthly_price })}>MONTHLY PASS (30 days) <br/>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MYR' }).format(plans[1].monthly_price)} (20% OFF)</button>
+                    </>
+                )}
                 </div>
             </div>
             )
@@ -98,9 +140,9 @@ export default function Booking() {
                     <div className='slide4'>
                         <div className='calendar'>
                             <Calendar 
-                            onChange={(date) => setSelectedChoices({ ...selectedChoices, slot: date })} 
-                            value={value}
-                            minDate={new Date()} // Prevent selecting dates before today
+                                onChange={(date) => setSelectedChoices({ ...selectedChoices, slot: date })} 
+                                value={value}
+                                minDate={nextDay} // Prevent selecting dates before the next day
                             />
                         </div>
                     </div>
@@ -188,6 +230,7 @@ export default function Booking() {
 
     //slider options b/w pax or group
     const handleSelection = (type) => {
+        setShowBookingComplete(false);
         setSelectedChoices({ ...selectedChoices, type });
         if (type === 'pax') {
             setCurrentSlide(1); // Navigate to slide 2 for Pax
@@ -227,177 +270,206 @@ export default function Booking() {
         return selectedSlides;
     };
 
-    const handleBookNow = async () => {
+    const handleBookNow = () => {
         if (!selectedChoices.type || !selectedChoices.plan || !selectedChoices.slot) {
             alert('Please select all options before booking');
         } else {
-            console.log('Booking:', selectedChoices);
-            try {
-                const response = await fetch('/api/bookNow', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(selectedChoices),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const data = await response.json();
-                console.log('Booking successful:', data);
-                // Handle successful booking (e.g., show a success message, redirect, etc.)
-            } catch (error) {
-                console.error('Error booking:', error);
-                // Handle error (e.g., show an error message)
-            }
+            setShowConfirmation(true);
         }
     };
 
+    const handleConfirmBooking = async () => {
+        try {
+            const slotDateUTC = new Date(selectedChoices.slot.getTime() - selectedChoices.slot.getTimezoneOffset() * 60000).toISOString();
+            
+            const response = await fetch('/api/bookNow', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: selectedChoices.type,
+                    plan: selectedChoices.plan.name,
+                    slot: slotDateUTC,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(errorData.message);
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Booking successful:', data);
+            setShowBookingComplete(true);
+            resetBooking();
+        } catch (error) {
+            console.error('Error booking:', error);
+            // Handle error (e.g., show an error message)
+        }
+    };
+
+
+
     return (
         <div className='container'>
-                <div className='toc'>
-                    <ul>
-                        <li className={`${activeToc === 'how-it-works' ? 'active bold' : ''}`}>
-                            <a href="#how-it-works" onClick={() => handleTocClick(howItWorksRef, 'how-it-works')}>How CollabKita Works?</a>
-                        </li>
-                        <li className={`${activeToc === 'what-we-provide' ? 'active bold' : ''}`}>
-                            <a href="#what-we-provide" onClick={() => handleTocClick(whatWeProvideRef, 'what-we-provide')}>What CollabKita provides</a>
-                        </li>
-                        <li className={`${activeToc === 'book-now' ? 'active bold' : ''}`}>
-                            <a href="#book-now" onClick={() => handleTocClick(bookNowRef, 'book-now')}>Book Now</a>
-                        </li>
-                    </ul>
-                </div>
-                <h1 className='how-title'id='how-it-works' ref={howItWorksRef}>How CollabKita Works?</h1>
-                <div className='how-container'>
-                    <div className='how-row-1'>
-                        <div className='how-1'>
-                            <div className='how-1-image'>
-                                <SummarizeIcon className="summarize-icon" fontSize="large" />
-                            </div>
-                            <div className='how-1-no'>
-                                01
-                            </div>
-                            <div className='how-1-text'>
-                                <h4>Choose package & plan</h4>
-                                <p>Choose your choice of package followed by the plan</p>
-                            </div>
+            <div className='toc'>
+                <ul>
+                    <li className={`${activeToc === 'how-it-works' ? 'active bold' : ''}`}>
+                        <a href="#how-it-works" onClick={() => handleTocClick(howItWorksRef, 'how-it-works')}>How CollabKita Works?</a>
+                    </li>
+                    <li className={`${activeToc === 'what-we-provide' ? 'active bold' : ''}`}>
+                        <a href="#what-we-provide" onClick={() => handleTocClick(whatWeProvideRef, 'what-we-provide')}>What CollabKita provides</a>
+                    </li>
+                    <li className={`${activeToc === 'book-now' ? 'active bold' : ''}`}>
+                        <a href="#book-now" onClick={() => handleTocClick(bookNowRef, 'book-now')}>Book Now</a>
+                    </li>
+                </ul>
+            </div>
+            <h1 className='how-title'id='how-it-works' ref={howItWorksRef}>How CollabKita Works?</h1>
+            <div className='how-container'>
+                <div className='how-row-1'>
+                    <div className='how-1'>
+                        <div className='how-1-image'>
+                            <SummarizeIcon className="summarize-icon" fontSize="large" />
                         </div>
-                        <div className='how-2'>
-                            <div className='how-2-image'>
-                                <CalendarMonthIcon className="calendar-icon" fontSize="large"/>
-                            </div>
-                            <div className='how-2-no'>
-                                02
-                            </div>
-                            <div className='how-2-text'>
-                                <h4>Select preferred slot</h4>
-                                <p>Save your date now or later!</p>
-                            </div>
+                        <div className='how-1-no'>
+                            01
+                        </div>
+                        <div className='how-1-text'>
+                            <h4>Choose package & plan</h4>
+                            <p>Choose your choice of package followed by the plan</p>
                         </div>
                     </div>
-                    <div className='how-row-2'>
-                        <div className='how-3'>
-                            <div className='how-3-image'>
-                                <PaymentIcon className="payment-icon" fontSize="large"/>
-                            </div>
-                            <div className='how-3-no'>
-                                03
-                            </div>
-                            <div className='how-3-text'>
-                                <h4>Pay & Confirm</h4>
-                                <p>Complete payment and receive booking details in your email</p>
-                            </div>
+                    <div className='how-2'>
+                        <div className='how-2-image'>
+                            <CalendarMonthIcon className="calendar-icon" fontSize="large"/>
                         </div>
-                        <div className='how-4'>
-                            <div className='how-4-image'>
-                                <AddReactionIcon className="reaction-icon" fontSize="large"/>
-                            </div>
-                            <div className='how-4-no'>
-                                04
-                            </div>
-                            <div className='how-4-text'>
-                                <h4>Get work done!</h4>
-                                <p>Arrive to CollabKita and get your work done!</p>
-                            </div>
+                        <div className='how-2-no'>
+                            02
+                        </div>
+                        <div className='how-2-text'>
+                            <h4>Select preferred slot</h4>
+                            <p>Save your date now or later!</p>
                         </div>
                     </div>
                 </div>
-                <div className='provide-container' ref={whatWeProvideRef} id='what-we-provide'>
-                    <h1 className='provide-title'>What CollabKita provides</h1>
-                    <div className='provide-1'>
-                        <div>
-                            <h2 className='where1'>for group</h2>
-                            <img src={team} alt='Team' className='team'/>
+                <div className='how-row-2'>
+                    <div className='how-3'>
+                        <div className='how-3-image'>
+                            <PaymentIcon className="payment-icon" fontSize="large"/>
                         </div>
-                        <div>
-                            <h2 className='where1'>for private</h2>
-                            <img src={personal} alt='Private' className='private'/>
+                        <div className='how-3-no'>
+                            03
+                        </div>
+                        <div className='how-3-text'>
+                            <h4>Pay & Confirm</h4>
+                            <p>Complete payment and receive booking details in your email</p>
                         </div>
                     </div>
-                        <div className='provide-2'>
-                            <h2 className='pantry-title'>Pantry for everyone</h2>
-                            <div className='pantry'>
-                                <img src={pantry1} alt='Pantry-1' className='pantry1'/>
-                                <img src={pantry2} alt='Pantry-2' className='pantry2'/>
-                                <img src={pantry3} alt='Pantry-3' className='pantry3'/>
-                            </div>
+                    <div className='how-4'>
+                        <div className='how-4-image'>
+                            <AddReactionIcon className="reaction-icon" fontSize="large"/>
                         </div>
-                        <div className='utilities'>
-                            <h2>Utilities provided</h2>
-                            <FaToilet className='large-icon' alt='toilet'/>
-                            <TbAirConditioning className='large-icon'/>
-                            <TiWiFi className='large-icon'/>
-                            <AiFillPrinter className='large-icon'/>
-                            <MdSupportAgent className='large-icon'/>
+                        <div className='how-4-no'>
+                            04
                         </div>
+                        <div className='how-4-text'>
+                            <h4>Get work done!</h4>
+                            <p>Arrive to CollabKita and get your work done!</p>
+                        </div>
+                    </div>
                 </div>
-             <button className='button-book' id='book-now' ref={bookNowRef} onClick={handleBookNow}>Book Now</button>
+            </div>
+            <div className='provide-container' ref={whatWeProvideRef} id='what-we-provide'>
+                <h1 className='provide-title'>What CollabKita provides</h1>
+                <div className='provide-1'>
+                    <div>
+                        <h2 className='where1'>for group</h2>
+                        <img src={team} alt='Team' className='team'/>
+                    </div>
+                    <div>
+                        <h2 className='where1'>for private</h2>
+                        <img src={personal} alt='Private' className='private'/>
+                    </div>
+                </div>
+                    <div className='provide-2'>
+                        <h2 className='pantry-title'>Pantry for everyone</h2>
+                        <div className='pantry'>
+                            <img src={pantry1} alt='Pantry-1' className='pantry1'/>
+                            <img src={pantry2} alt='Pantry-2' className='pantry2'/>
+                            <img src={pantry3} alt='Pantry-3' className='pantry3'/>
+                        </div>
+                    </div>
+                    <div className='utilities'>
+                        <h2>Utilities provided</h2>
+                        <FaToilet className='large-icon' alt='toilet'/>
+                        <TbAirConditioning className='large-icon'/>
+                        <TiWiFi className='large-icon'/>
+                        <AiFillPrinter className='large-icon'/>
+                        <MdSupportAgent className='large-icon'/>
+                    </div>
+            </div>
+            
 
-                <div className='slider'>
-                    {Object.keys(selectedChoices).length > 0 && (
-                    <div className='selected-choices'>
-                        <ol>
-                            {selectedChoices.type && (
-                                <li>
-                                    <p><strong>Selected Type: </strong>{selectedChoices.type}</p>
-                                </li>
-                            )}
-                            {selectedChoices.plan && (
-                                <li>
-                                    <p><strong>Selected Plan: </strong>{selectedChoices.plan}</p>
-                                </li>
-                            )}
-                            {selectedChoices.slot && (
-                                <li>
-                                    <p><strong>Selected Slot: </strong>{selectedChoices.slot.toDateString()}</p>
-                                </li>
-                            )}
-                        </ol>
-                    </div>
-                    )}
-
-                    <div className='slide-header'>
-                        <span className='slide-no'>{slides[currentSlide].no}</span>
-                    <h1 className='slide-title' key={`slide${currentSlide}-title`}>{slides[currentSlide].title}</h1>
-                    </div>
-                        {slides[currentSlide].content}
-                        <div className='navigation-buttons'>
-                            <button className='button-prev' onClick={prevSlide}><ArrowBackIosIcon /></button>
-                            <button className='button-next' onClick={nextSlide}><ArrowForwardIosIcon/></button>
-                        </div>
-                    {(selectedChoices.type || selectedChoices.plan || selectedChoices.slot ) && (
-                    <div className='slide-options'>
-                        {getSelectedSlides().map((slideIndex) => (
-                            <button key={slideIndex} onClick={() => goToSlide(slideIndex)}>
-                                {slides[slideIndex].no}
-                            </button>
-                        ))}
-                    </div>
-                    )}
+            <div className='slider'>
+                {Object.keys(selectedChoices).length > 0 && (
+                <div className='selected-choices'>
+                    <ol>
+                        {selectedChoices.type && (
+                            <li>
+                                <p><strong>Selected Type: </strong>{selectedChoices.type}</p>
+                            </li>
+                        )}
+                        {selectedChoices.plan && (
+                            <li>
+                                <p><strong>Selected Plan: </strong>{selectedChoices.plan.name} - RM {selectedChoices.plan.price}</p>
+                            </li>
+                        )}
+                        {selectedChoices.slot && (
+                            <li>
+                                <p><strong>Selected Slot: </strong>{selectedChoices.slot.toDateString()}</p>
+                            </li>
+                        )}
+                    </ol>
                 </div>
+                )}
+
+                <div className='slide-header'>
+                    <span className='slide-no'>{slides[currentSlide].no}</span>
+                <h1 className='slide-title' key={`slide${currentSlide}-title`}>{slides[currentSlide].title}</h1>
+                </div>
+                    {slides[currentSlide].content}
+                    <div className='navigation-buttons'>
+                        <button className='button-prev' onClick={prevSlide}><ArrowBackIosIcon /></button>
+                        <button className='button-next' onClick={nextSlide}><ArrowForwardIosIcon/></button>
+                    </div>
+                {(selectedChoices.type || selectedChoices.plan || selectedChoices.slot ) && (
+                <div className='slide-options'>
+                    {getSelectedSlides().map((slideIndex) => (
+                        <button key={slideIndex} onClick={() => goToSlide(slideIndex)}>
+                            {slides[slideIndex].no}
+                        </button>
+                    ))}
+                </div>
+                )}
+            </div>
+            {!showConfirmation && (
+                <button className='button-book' id='book-now' ref={bookNowRef} onClick={handleBookNow}>
+                    Book Now
+                </button>
+            )}
+            {showConfirmation && (
+                <Confirmation
+                    packageType={selectedChoices.type}
+                    plan={selectedChoices.plan}
+                    date={selectedChoices.slot}
+                    onConfirm={handleConfirmBooking}
+                    onCancel={() => {resetBooking()}}
+                />
+            )}
+            {showBookingComplete && <BookingComplete />}
         </div>
     );
 }

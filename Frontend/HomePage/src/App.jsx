@@ -13,6 +13,7 @@ import Settings from './pages/Settings.jsx';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 import TopBar from './components/TopBar.jsx';
+import AuthRedirect from './components/AuthRedirect'; // Import the AuthRedirect component
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,6 +30,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <AuthRedirect isLoggedIn={isLoggedIn} />
       {isLoggedIn && <Panel onLogout={handleLogout} />}
       {/* Define routes for different components */}
       <Routes>

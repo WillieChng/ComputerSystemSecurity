@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, render_template, request, abort, session
 from email_ver import send_email
-from models import Login, Room, Booking, Customer
+from models import Login, Room, Booking, Customer, Price
 from app_db_init import db
 from functools import wraps
 from dotenv import load_dotenv
@@ -122,19 +122,19 @@ def book_now():
     slot = data.get('slot')
 
     if not type or not plan or not slot:
-        return jsonify({"success": False, "message": "Missing booking information"}), 400
+        return jsonify({"success": False, "message": "Missing booking information"}), 401
 
-    slot_date = datetime.strptime(slot, '%Y-%m-%dT%H:%M:%S.%fZ').date()
+    slot_date = datetime.fromisoformat(slot.replace('Z', '+00:00')).date()
     booking_date = datetime.now().date()
 
     # Determine the date range based on the plan
     if plan == 'DAY PASS':
         start_date = slot_date
         end_date = slot_date
-    elif plan == 'WEEKLY PASS':
+    elif plan == 'WEEKLY PASS (7 Days)':
         start_date = slot_date
         end_date = slot_date + timedelta(days=6)
-    elif plan == 'MONTHLY PASS':
+    elif plan == 'MONTHLY PASS (30 Days)':
         start_date = slot_date
         end_date = slot_date + timedelta(days=29)
     else:
@@ -219,3 +219,22 @@ def create_account():
     
     # Create a new login entry
     return jsonify({"success": True, "message": "Account successfully created"}), 201
+
+
+@api.route('/getPlans', methods=['GET'])
+def get_plans():
+    try:
+        prices = Price.query.all()
+        plans = []
+        for price in prices:
+            weekly_price = price.price *7 * price.week_discount 
+            monthly_price = price.price * 30 * price.month_discount
+            plans.append({
+                "room_type": price.room_type,
+                "price": price.price,
+                "weekly_price": weekly_price,
+                "monthly_price": monthly_price
+            })
+        return jsonify(plans), 200
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500

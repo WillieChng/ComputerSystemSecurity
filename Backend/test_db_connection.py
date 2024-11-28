@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from sqlalchemy import text, select
-from Backend.models import Login, Customer, Booking, Room
+from Backend.models import Login, Customer, Booking, Room, Price
 from Backend.app_db_init import db, app
 from tabulate import tabulate
 
@@ -29,19 +29,29 @@ def add_user():
         print(f"Added new user: {new_customer.first_name} {new_customer.last_name}")
 
         # Create a new room
-        new_room = Room(room_name="Single Room 1", desc="Test Room Description", price=20, amenities="Test Amenities", active=True, isSingle=True)
+        new_room = Room(room_name="Single Room 1", desc="Test Room Description", amenities="Test Amenities", active=True, isSingle=True)
         db.session.add(new_room)
         db.session.commit()
 
-        new_room = Room(room_name="Single Room 2", desc="Test Room Description", price=20, amenities="Test Amenities", active=True, isSingle=True)
+        new_room = Room(room_name="Single Room 2", desc="Test Room Description", amenities="Test Amenities", active=True, isSingle=True)
         db.session.add(new_room)
         db.session.commit()
 
-        new_room = Room(room_name="Group Room 1", desc="Test Room Description", price=180, amenities="Test Amenities", active=True, isSingle=False)
+        new_room = Room(room_name="Group Room 1", desc="Test Room Description", amenities="Test Amenities", active=True, isSingle=False)
         db.session.add(new_room)
         db.session.commit()
 
         print(f"Added new room: {new_room.room_name}")
+
+        new_price= Price(price=20, room_type="Single Room", week_discount=0.9, month_discount=0.85)
+        db.session.add(new_price)
+        db.session.commit()
+
+        new_price= Price(price=180, room_type="Group Room", week_discount=0.85, month_discount=0.8)
+        db.session.add(new_price)
+        db.session.commit()
+
+        print(f"Added new prices: {new_price.room_type}")
 
 #Query the database
 def query():
@@ -80,7 +90,6 @@ def query():
         "Room_ID": instance.room_id,
         "Room_Name": instance.room_name,
         "Room_Description": instance.desc,
-        "Room_Price": instance.price,
         "Room_Amenities": instance.amenities,
         "Room_Active": instance.active
         }
