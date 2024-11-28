@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
@@ -15,3 +16,9 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # Create the SQLAlchemy db instance
 db = SQLAlchemy(app)
+
+# Configure the session to use the SQLAlchemy instance
+app.config['SESSION_TYPE'] = 'sqlalchemy'
+app.config['SESSION_SQLALCHEMY'] = db
+
+Session(app)

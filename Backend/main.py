@@ -3,34 +3,34 @@ from models import Login, Customer
 from app_db_init import db, app
 from tabulate import tabulate
 
-#Create the database tables if they do not exist
+# Create the database tables if they do not exist
 with app.app_context():
     db.create_all()
 
 login_list = []
 customer_list = []
 
-#Query the database
+# Query the database
 def query():
     for instance in db.session.query(Login).order_by(Login):
         user_dict = {
-        "Customer_ID": instance.customer_id,
-        "Username": instance.email
+            "Customer_ID": instance.customer_id,
+            "Username": instance.email
         }
         login_list.append(user_dict)
-    
+
     for instance in db.session.query(Customer).order_by(Customer.customer_id):
         customer_dict = {
-        "Customer_ID": instance.customer_id,
-        "First_Name": instance.first_name,
-        "Last_Name": instance.last_name,
-        "Gender": instance.gender,
-        "Phone_Number": instance.phone_number,
-        "Organisation": instance.org
+            "Customer_ID": instance.customer_id,
+            "First_Name": instance.first_name,
+            "Last_Name": instance.last_name,
+            "Gender": instance.gender,
+            "Phone_Number": instance.phone_number,
+            "Organisation": instance.org
         }
         customer_list.append(customer_dict)
 
-#Display the query results from the query()
+# Display the query results from the query()
 def print_query():
     query()
     print("Users:")
@@ -38,7 +38,7 @@ def print_query():
     print("Customers:")
     print(tabulate(customer_list, headers='keys', tablefmt='pretty'))
 
-#import the routes
+# Import the routes
 from routes import api
 app.register_blueprint(api)
 

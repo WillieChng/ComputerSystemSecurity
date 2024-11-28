@@ -11,34 +11,30 @@ function Login({ onLogin }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-
     try {
-      const auth_response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (auth_response.ok) {
-        const auth_data = await auth_response.json().catch(() => ({}));
-        
-        if (auth_data.success) {            
-          alert('Verification successful!');
-          onLogin(); // Call the function to update login status
-          navigate('/'); // Redirect to the home page
+        const auth_response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+        if (auth_response.ok) {
+            const auth_data = await auth_response.json();
+            if (auth_data.success) {
+                alert('Login successful!');
+                onLogin(); // Call the function to update login status
+                navigate('/'); // Redirect to the home page
+            } else {
+                setError(auth_data.message || 'Invalid username or password');
+            }
         } else {
-          setError(auth_data.message || 'Invalid username or password');
+            setError('No server response. Please try again later.');
         }
-      }else{
-        setError('No server response. Please try again later.');
-        return;
-      }
     } catch (error) {
-      setError(`An error occurred. Please try again later. ${error.message}`);
+        setError('An error occurred. Please try again later.');
     }
-  };
+};
 
   return (
     <div className="login-container">

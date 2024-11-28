@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./TopBar.css";
 import AccountPng from '../public/8345328.png';
 import Logo from '../public/collabkita-logo.png';
 
-export default function TopBar({ collapsed }) {
+export default function TopBar({ collapsed, onLogout }) {
     return (
       <header className={collapsed ? 'collapsed' : ''}> 
-			<Link to="/" className="main-logo-link"> 
+            <Link to="/" className="main-logo-link"> 
         <div className='main-logo' >
         
           <h1>CollabKita</h1> 
@@ -20,55 +20,71 @@ export default function TopBar({ collapsed }) {
       </Link>
       
       <div className="topbar-right">
-          <AccountDropdown /> {/* Render the component directly */}
+          <AccountDropdown onLogout={onLogout} /> {/* Render the component directly */}
       </div>
       </header>
     );
 }
 
-
-function AccountDropdown() {
+function AccountDropdown({ onLogout }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
-  
-	const handleMouseEnter = () => setIsDropdownOpen(true);
-	const handleMouseLeave = () => setIsDropdownOpen(false);
+    const navigate = useNavigate();
+
+    const handleMouseEnter = () => setIsDropdownOpen(true);
+    const handleMouseLeave = () => setIsDropdownOpen(false);
 
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsDropdownOpen(false);
+        }
     };
-  
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Include cookies in the request
+            });
+            if (response.ok) {
+                onLogout(); // Update the isLoggedIn state in the App component
+                navigate('/login'); // Redirect to the login page
+            } else {
+                console.error('Logout failed');
+            }
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
+    };
+
     useEffect(() => {
-      // Add event listener when component mounts
-      document.addEventListener('mousedown', handleClickOutside); 
-      return () => document.removeEventListener('mousedown', handleClickOutside); 
-    }, []); // Empty dependency array ensures this runs only once on mount
-  
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
     return (
-      <div 
-	  	className="account-dropdown" 
-	  	ref={dropdownRef}
-	  	onMouseEnter={handleMouseEnter} 
-	  	onMouseLeave={handleMouseLeave}
-	  >
-        <button className="account-selection-button">
-          <div className="account-content">
-            <img
-              src={AccountPng}
-              alt="Account"
-              style={{ width: '40px', height: '40px', borderRadius: '50%', margin: '10px' }}
-            />
-          </div>
-        </button>
-        {isDropdownOpen && (
-          <div className="dropdown-content"> 
-            <div><button><Link to="/profile">Profile</Link></button></div>
-            <div><button><a href="#">Settings</a></button></div>
-            <div><button><a href="#">Logout</a></button></div>
-          </div>
-        )}
-      </div>
+        <div
+            className="account-dropdown"
+            ref={dropdownRef}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            <button className="account-selection-button">
+                <div className="account-content">
+                    <img
+                        src={AccountPng}
+                        alt="Account"
+                        style={{ width: '40px', height: '40px', borderRadius: '50%', margin: '10px' }}
+                    />
+                </div>
+            </button>
+            {isDropdownOpen && (
+                <div className="dropdown-content">
+                    <div><button><Link to="/profile">Profile</Link></button></div>
+                    <div><button><Link to="/settings">Settings</Link></button></div>
+                    <div><button onClick={handleLogout}><a>Logout</a></button></div>
+                </div>
+            )}
+        </div>
     );
 }

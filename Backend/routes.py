@@ -31,6 +31,21 @@ def require_api_key(f):
         return f(*args, **kwargs)
     return decorated_function
 
+#Decorator to protect roues that require login
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return jsonify({"success": False, "message": "User not authenticated"}), 401
+        return f(*args, **kwargs)
+    return decorated_function
+
+@api.route('/protected', methods=['GET'])
+@login_required
+def protected():
+    return jsonify({"message": "This is a protected route"}), 200
+
+
 # Create a route for the blueprint
 @api.route('/hello', methods=['POST'])
 def get_data():
@@ -40,6 +55,15 @@ def get_data():
 @api.route('/')
 def home():
     return "<h1>Hello</h1>"
+
+
+@api.route('/check-auth', methods=['GET'])
+def check_auth():
+    if 'user_id' in session:
+        return jsonify({"authenticated": True}), 200
+    else:
+        return jsonify({"authenticated": False}), 401
+    
 
 # Create a route to handle the form submission
 @api.route('/login', methods=['POST'])
@@ -51,6 +75,7 @@ def submit():
     login=Login.query.filter_by(email=email).first()
 
     if login and login.verify_password(passwd):
+        session['user_id'] = login.customer_id
         return jsonify({"success": True}), 200
     else:
         #show the login page with an error message
@@ -68,6 +93,10 @@ def submit():
     #     #show the login page with an error message
     #     return jsonify({"success": False, "message": "Invalid credentials"}), 200
     
+@api.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return jsonify({"success": True}), 200
 
 @api.route('/verify-code', methods=['POST'])
 def verify_code():
@@ -149,3 +178,4 @@ def book_now():
         return jsonify({"success": True, "message": "Booking successful"}), 200
     else:
         return jsonify({"success": False, "message": "No available rooms for the selected date range"}), 404
+    

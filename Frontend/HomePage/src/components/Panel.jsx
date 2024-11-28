@@ -11,13 +11,14 @@ import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import InfoIcon from '@mui/icons-material/Info';
 
 
-export default function Panel() {
+export default function Panel({onLogout}) {
   const [collapsed, setCollapsed] = React.useState(false);  
 
   return (
     <div>
-    <TopBar collapsed={collapsed} />
+    <TopBar collapsed={collapsed} onLogout={onLogout} />
     {/* Do not Fucking Touch this or I will send you to see God personally myself*/}
+    {/* I kinda did tho */}
     <div className='main-effect'>
       <Sidebar backgroundColor='none' collapsed={collapsed}>
         <Menu
