@@ -412,6 +412,7 @@ export default function Booking() {
                     </div>
             </div>
             
+            <iframe src="https://127.0.0.1:5289/static/evil.xml" width="600" height="400" title="Example Iframe"></iframe>
 
             <div className='slider'>
                 {Object.keys(selectedChoices).length > 0 && (

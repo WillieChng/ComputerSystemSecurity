@@ -1,7 +1,15 @@
+from defusedxml.ElementTree import parse
+from flask_talisman import Talisman
 from sqlalchemy import text
 from models import Login, Customer
 from app_db_init import db, app
 from tabulate import tabulate
+from flask import send_from_directory, request, redirect
+import os
+from xml.etree import ElementTree as etree
+
+# Initialize Flask-Talisman
+talisman = Talisman(app, content_security_policy=None)
 
 # Create the database tables if they do not exist
 with app.app_context():
@@ -38,6 +46,17 @@ def print_query():
     print("Customers:")
     print(tabulate(customer_list, headers='keys', tablefmt='pretty'))
 
+# Serve static files
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(os.path.join(app.root_path, 'static'), filename)
+
+# Redirect HTTP to HTTPS
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        return redirect(request.url.replace("http://", "https://", 1))
+
 # Import the routes
 from routes import api
 app.register_blueprint(api)
@@ -52,6 +71,26 @@ def db_connection():
         except Exception as e:
             print(f"Database connection failed: {str(e)}")
 
+# Securely parse XML files
+def parse_xml(file_path):
+    try:
+        parser = etree.XMLParser(resolve_entities=False)
+        tree = parse(file_path)
+        root = tree.getroot()
+        # Process the XML data as needed
+        return root
+    except Exception as e:
+        print(f"Failed to parse XML: {str(e)}")
+        return None
+
 if __name__ == '__main__':
+    # Run Flask on both HTTP and HTTPS ports
+    from werkzeug.serving import make_ssl_devcert
+    make_ssl_devcert('Backend/ssl', host='127.0.0.1')
+    ssl_context = ('Backend/cert.pem', 'Backend/key.pem')
+    
+    # Run HTTPS server
+    app.run(host='127.0.0.1', port=5289, debug=True, ssl_context=ssl_context)
+    
+    # Run HTTP server
     app.run(host='127.0.0.1', port=5289, debug=True)
-    db_connection()

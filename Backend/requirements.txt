@@ -9,3 +9,7 @@ cryptography
 flask_session
 flask-cors
 PyJWT
+pyOpenSSL
+defusedxml
+lxml
+Flask-Talisman
