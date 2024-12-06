@@ -84,9 +84,11 @@ def parse_xml(file_path):
         return None
 
 if __name__ == '__main__':
-    # Run Flask on both HTTP and HTTPS ports
-    from werkzeug.serving import make_ssl_devcert
-    make_ssl_devcert('Backend/ssl', host='127.0.0.1')
+    # Create the SSL directory if it does not exist
+    # os.makedirs('ssl', exist_ok=True)
+    # # Run Flask on both HTTP and HTTPS ports
+    # from werkzeug.serving import make_ssl_devcert
+    # make_ssl_devcert('./ssl', host='127.0.0.1')
     ssl_context = ('Backend/cert.pem', 'Backend/key.pem')
     
     # Run HTTPS server
