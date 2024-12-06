@@ -18,7 +18,6 @@ import AuthRedirect from './components/AuthRedirect'; // Import the AuthRedirect
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
-  console.log(`API URL: ${apiUrl}`);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
